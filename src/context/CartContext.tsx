@@ -40,7 +40,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [wishlist, setWishlist] = useState<string[]>(() => {
     try {
       const stored = localStorage.getItem('nexus_wishlist');
-      return stored ? JSON.parse(stored) : ['nx-pashmina-01', 'nx-tea-01'];
+      return stored ? JSON.parse(stored) : [];
     } catch {
       return [];
     }
@@ -104,18 +104,18 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const applyCoupon = (code: string) => {
     const clean = code.trim().toUpperCase();
-    if (clean === 'HIMALAYA10') {
+    if (clean === 'NEPAL10') {
       const disc = Math.round(subtotal * 0.1);
       setDiscountAmount(disc);
       setCouponCode(clean);
-      return { success: true, message: 'Namaste! 10% Himalayan discount applied.' };
+      return { success: true, message: 'Namaste! 10% Nepal store discount applied.' };
     }
     if (clean === 'NEXUS500' && subtotal >= 3000) {
       setDiscountAmount(500);
       setCouponCode(clean);
       return { success: true, message: 'Rs. 500 gift voucher applied!' };
     }
-    return { success: false, message: 'Invalid promo code. Try HIMALAYA10' };
+    return { success: false, message: 'Invalid promo code. Try NEPAL10' };
   };
 
   const subtotal = items.reduce((sum, item) => sum + item.product.price * item.quantity, 0);

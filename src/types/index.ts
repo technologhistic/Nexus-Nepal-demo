@@ -29,7 +29,23 @@ export interface User {
   phone?: string;
   city?: string;
   address?: string;
+  role?: 'admin' | 'buyer' | 'visitor';
+  authProvider?: 'google' | 'password';
+  canBuy?: boolean;
   orders: Order[];
+}
+
+export interface StoreSettings {
+  storeName: string;
+  bannerText: string;
+  showBanner: boolean;
+  standardShipping: number;
+  taxPercentage: number;
+  promoCode: string;
+  promoDiscount: number;
+  allowVisitorCheckout: boolean;
+  supportEmail: string;
+  supportPhone: string;
 }
 
 export interface Order {

@@ -11,7 +11,7 @@ An authentic Himalayan marketplace and modern commerce web application for Nepal
    - Smooth switching between **Sign In** and **Create Account**.
    - Interactive password strength meter with 4-level indicator.
    - "Keep me signed in" toggle & show/hide password buttons.
-   - Seeded demo account (`sapkotalaxmi703@gmail.com`) for testing.
+   - Clean authentication with input validation.
 
 2. **Himalayan Artisan & Products Catalog**
    - **Himalayan Crafts:** Pure Mustang Pashmina Cashmere, Handcrafted 7-Metal Singing Bowl Set, Hand-Cast Brass Diya, Boudhanath Shakyamuni Buddha Thangka Canvas.

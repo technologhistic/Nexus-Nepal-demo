@@ -3,10 +3,10 @@ import { Product } from '../types';
 export const PRODUCTS: Product[] = [
   {
     id: 'nx-pashmina-01',
-    name: 'Pure Himalayan Pashmina Shawl',
+    name: 'Pure Nepal Pashmina Shawl',
     slug: 'pashmina-shawl-natural',
     category: 'crafts',
-    categoryLabel: 'Himalayan Crafts',
+    categoryLabel: 'Artisan Crafts',
     price: 8500,
     originalPrice: 10500,
     origin: 'Mustang, Gandaki Province',
@@ -15,7 +15,7 @@ export const PRODUCTS: Product[] = [
     stockCount: 18,
     weight: '160g',
     materials: 'Grade-A Changthangi mountain goat fleece',
-    description: 'Hand-spun and handwoven by women weavers in Mustang. Crafted from authentic underfleece of Himalayan mountain goats, featherlight yet exceptionally warm.',
+    description: 'Hand-spun and handwoven by women weavers in Mustang. Crafted from authentic underfleece of mountain goats, featherlight yet exceptionally warm.',
     features: ['100% Pure Mountain Cashmere', 'Natural unbleached undyed fibers', 'Traditional handloom diamond weave', 'Includes authentication GI certificate'],
     image: 'https://images.unsplash.com/photo-1607344645866-009c320c5ab8?auto=format&fit=crop&w=800&q=80'
   },
@@ -42,7 +42,7 @@ export const PRODUCTS: Product[] = [
     name: 'Handcrafted 7-Metal Singing Bowl Set',
     slug: 'singing-bowl-set',
     category: 'crafts',
-    categoryLabel: 'Himalayan Crafts',
+    categoryLabel: 'Artisan Crafts',
     price: 6400,
     originalPrice: 7800,
     origin: 'Patan, Bagmati Province',
@@ -51,7 +51,7 @@ export const PRODUCTS: Product[] = [
     stockCount: 22,
     weight: '820g',
     materials: 'Copper, tin, iron, silver, gold, lead, zinc alloy',
-    description: 'Authentic Tibetan-style meditation bowl hand-hammered with a traditional alloy of seven sacred planetary metals. Produces rich, resonant harmonic frequencies.',
+    description: 'Authentic meditation bowl hand-hammered with a traditional alloy of seven sacred planetary metals in Patan. Produces rich, resonant harmonic frequencies.',
     features: ['Includes rosewood suede-wrapped striker', 'Hand-stitched silk brocade cushion', 'Tuned to Heart Chakra (F# 432Hz)', 'Distinctive hammer-marked surface'],
     image: 'https://images.unsplash.com/photo-1514517521153-1be72277b32f?auto=format&fit=crop&w=800&q=80'
   },
@@ -75,7 +75,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: 'nx-honey-01',
-    name: 'Wild Himalayan Cliff Honey (500g)',
+    name: 'Wild Cliff Honey (500g)',
     slug: 'nepali-honey-500g',
     category: 'organic',
     categoryLabel: 'Organic & Food',
@@ -87,7 +87,7 @@ export const PRODUCTS: Product[] = [
     stockCount: 34,
     weight: '500g Jar',
     materials: 'Raw unprocessed liquid cliff honey',
-    description: 'Raw, unpasteurized amber honey harvested by indigenous Gurung cliff honey hunters from wild Apis laboriosa colonies nesting in high Himalayan foothills.',
+    description: 'Raw, unpasteurized amber honey harvested by indigenous Gurung cliff honey hunters from wild Apis laboriosa colonies nesting in high mountain foothills.',
     features: ['100% Raw unprocessed liquid honey', 'Floral notes of rhododendron and alpine flora', 'Naturally enzymatically active', 'Eco-friendly glass jar'],
     image: 'https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80'
   },
@@ -111,7 +111,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: 'nx-poles-01',
-    name: 'Himalaya Pro Carbon Trekking Poles (Pair)',
+    name: 'Summit Pro Carbon Trekking Poles (Pair)',
     slug: 'trekking-poles-pair',
     category: 'gear',
     categoryLabel: 'Mountain & Living',
@@ -129,7 +129,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: 'nx-gundruk-01',
-    name: 'Organic Himalayan Gundruk Pack',
+    name: 'Organic Nepal Gundruk Pack',
     slug: 'gundruk-pack',
     category: 'organic',
     categoryLabel: 'Organic & Food',
@@ -150,7 +150,7 @@ export const PRODUCTS: Product[] = [
     name: 'Hand-Cast Brass Diya Oil Lamp',
     slug: 'brass-diya',
     category: 'crafts',
-    categoryLabel: 'Himalayan Crafts',
+    categoryLabel: 'Artisan Crafts',
     price: 1650,
     originalPrice: 1950,
     origin: 'Thimi, Bhaktapur, Bagmati',
@@ -165,7 +165,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: 'nx-aachar-01',
-    name: 'Spicy Dalle Khursani & Timmur Aachar',
+    name: 'Spicy Dalle Khursani & Timur Aachar',
     slug: 'aachar-set',
     category: 'organic',
     categoryLabel: 'Organic & Food',
@@ -176,9 +176,9 @@ export const PRODUCTS: Product[] = [
     inStock: true,
     stockCount: 90,
     weight: '350g Jar',
-    materials: 'Dalle chili, Himalayan Sichuan pepper, cold-pressed mustard oil',
-    description: 'Round cherry chili peppers (Dalle Khursani) combined with numbing Himalayan Sichuan pepper (Timmur) in cold-pressed mustard oil.',
-    features: ['Wild Timur Sichuan peppercorn infusion', 'Cold pressed mustard oil preservation', 'Hand-picked whole organic Dalle', '350g glass sealed jar'],
+    materials: 'Dalle chili, Timur pepper, cold-pressed mustard oil',
+    description: 'Round cherry chili peppers (Dalle Khursani) combined with numbing Timur pepper in cold-pressed mustard oil.',
+    features: ['Wild Timur peppercorn infusion', 'Cold pressed mustard oil preservation', 'Hand-picked whole organic Dalle', '350g glass sealed jar'],
     image: 'https://images.unsplash.com/photo-1589135233689-d56d11a62495?auto=format&fit=crop&w=800&q=80'
   },
   {
@@ -186,7 +186,7 @@ export const PRODUCTS: Product[] = [
     name: 'Hand-Painted Buddha Meditation Thangka',
     slug: 'thangka-buddha',
     category: 'crafts',
-    categoryLabel: 'Himalayan Crafts',
+    categoryLabel: 'Artisan Crafts',
     price: 14500,
     originalPrice: 18000,
     origin: 'Boudhanath, Kathmandu',

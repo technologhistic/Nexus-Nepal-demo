@@ -17,9 +17,9 @@ export const NexusAuthPage: React.FC<NexusAuthPageProps> = ({
   const [mountedAt] = useState<number>(Date.now());
 
   // Login inputs
-  const [loginUser, setLoginUser] = useState('sapkotalaxmi703@gmail.com');
-  const [loginPass, setLoginPass] = useState('Himalaya2026!');
-  const [rememberMe, setRememberMe] = useState(true);
+  const [loginUser, setLoginUser] = useState('');
+  const [loginPass, setLoginPass] = useState('');
+  const [rememberMe, setRememberMe] = useState(false);
   const [showLoginPass, setShowLoginPass] = useState(false);
   const [loginInvalid, setLoginInvalid] = useState({ user: false, pass: false });
   const [loginStatus, setLoginStatus] = useState<{ text: string; bad?: boolean }>({ text: '' });
@@ -176,17 +176,16 @@ export const NexusAuthPage: React.FC<NexusAuthPageProps> = ({
                 Namaste,<em>welcome back.</em>
               </h2>
               <p>
-                Your cart, your orders and your favourite Himalayan finds are exactly where you left
-                them.
+                Your cart and account details are saved and ready whenever you return.
               </p>
             </div>
 
             <div className="brand-copy is-signup">
               <span className="eyebrow">Nexus Nepal</span>
               <h2>
-                Start your<em>first order.</em>
+                Create your<em>Nexus account.</em>
               </h2>
-              <p>One account for every order, every wishlist and every device you own.</p>
+              <p>One account for secure checkout and orders across all your devices.</p>
             </div>
           </div>
 

@@ -13,11 +13,11 @@ export const CheckoutView: React.FC<CheckoutViewProps> = ({ onBack, onOrderCompl
   const { items, subtotal, shippingFee, discountAmount, total, placeOrder } = useCart();
   const { user } = useAuth();
 
-  const [fullName, setFullName] = useState(user?.name || 'Laxmi Sapkota');
-  const [phone, setPhone] = useState(user?.phone || '+977 9841234567');
+  const [fullName, setFullName] = useState(user?.name || '');
+  const [phone, setPhone] = useState(user?.phone || '');
   const [province, setProvince] = useState('Bagmati Province');
-  const [city, setCity] = useState('Kathmandu');
-  const [street, setStreet] = useState(user?.address || 'Lazimpat, Ward No. 2');
+  const [city, setCity] = useState(user?.city || 'Kathmandu');
+  const [street, setStreet] = useState(user?.address || '');
 
   const [paymentMethod, setPaymentMethod] = useState<Order['paymentMethod']>('esewa');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -322,7 +322,7 @@ export const CheckoutView: React.FC<CheckoutViewProps> = ({ onBack, onOrderCompl
               </div>
               {discountAmount > 0 && (
                 <div className="flex justify-between text-emerald-700 font-bold">
-                  <span>Himalayan Promo Discount</span>
+                  <span>Store Promo Discount</span>
                   <span>- Rs. {discountAmount.toLocaleString()}</span>
                 </div>
               )}

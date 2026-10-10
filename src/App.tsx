@@ -10,8 +10,6 @@ import { CartDrawer } from './components/CartDrawer';
 import { CheckoutView } from './components/CheckoutView';
 import { AccountView } from './components/AccountView';
 import { NexusAuthPage } from './components/NexusAuthPage';
-import { GitHubModal } from './components/GitHubModal';
-import { CustomDomainModal } from './components/CustomDomainModal';
 import { PrivacyPolicyView } from './components/PrivacyPolicyView';
 import { TermsView } from './components/TermsView';
 import {
@@ -20,9 +18,7 @@ import {
   Truck,
   RotateCcw,
   ArrowRight,
-  Filter,
-  Github,
-  Globe
+  Filter
 } from 'lucide-react';
 
 const MainShop: React.FC = () => {
@@ -31,8 +27,6 @@ const MainShop: React.FC = () => {
   const [sortBy, setSortBy] = useState<'featured' | 'price-asc' | 'price-desc' | 'name-asc'>('featured');
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [activeView, setActiveView] = useState<'shop' | 'account' | 'checkout' | 'auth' | 'privacy' | 'terms'>('shop');
-  const [isGitHubModalOpen, setIsGitHubModalOpen] = useState(false);
-  const [isDomainModalOpen, setIsDomainModalOpen] = useState(false);
   const [completedOrder, setCompletedOrder] = useState<Order | null>(null);
 
   const { openCart } = useCart();
@@ -75,8 +69,6 @@ const MainShop: React.FC = () => {
         setSearchQuery={setSearchQuery}
         selectedCategory={selectedCategory}
         setSelectedCategory={setSelectedCategory}
-        onOpenGitHubModal={() => setIsGitHubModalOpen(true)}
-        onOpenDomainModal={() => setIsDomainModalOpen(true)}
         onOpenAccount={() => setActiveView('account')}
         activeView={activeView}
         setActiveView={setActiveView}
@@ -281,22 +273,6 @@ const MainShop: React.FC = () => {
             <p className="text-xs text-[#F5EEDC]/70 leading-relaxed">
               Curating genuine craftsmanship, organic agriculture, and mountain gear from cooperatives across Nepal.
             </p>
-            <div className="mt-4 flex flex-wrap gap-2">
-              <button
-                onClick={() => setIsDomainModalOpen(true)}
-                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xs bg-[#3B4A1F] hover:bg-[#556B2F] text-[#F5EEDC] text-xs font-medium transition-colors cursor-pointer"
-              >
-                <Globe className="w-3.5 h-3.5 text-[#B8F235]" />
-                <span>Custom Domain</span>
-              </button>
-              <button
-                onClick={() => setIsGitHubModalOpen(true)}
-                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xs bg-[#14161A] hover:bg-black text-[#F5EEDC] text-xs font-medium transition-colors cursor-pointer"
-              >
-                <Github className="w-3.5 h-3.5" />
-                <span>GitHub</span>
-              </button>
-            </div>
           </div>
 
           <div>
@@ -364,12 +340,6 @@ const MainShop: React.FC = () => {
             >
               Privacy Policy
             </button>
-            <button
-              onClick={() => setIsDomainModalOpen(true)}
-              className="hover:text-white transition-colors cursor-pointer"
-            >
-              Domain Verification
-            </button>
           </div>
         </div>
       </footer>
@@ -385,18 +355,6 @@ const MainShop: React.FC = () => {
         onProceedToCheckout={() => {
           setActiveView('checkout');
         }}
-      />
-
-      {/* GitHub Repository Push Modal */}
-      <GitHubModal
-        isOpen={isGitHubModalOpen}
-        onClose={() => setIsGitHubModalOpen(false)}
-      />
-
-      {/* Custom Domain Connection Modal */}
-      <CustomDomainModal
-        isOpen={isDomainModalOpen}
-        onClose={() => setIsDomainModalOpen(false)}
       />
     </div>
   );

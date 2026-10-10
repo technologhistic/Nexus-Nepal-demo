@@ -4,13 +4,10 @@ import { useCart } from '../context/CartContext';
 import {
   Search,
   ShoppingBag,
-  Heart,
   User,
   LogOut,
-  Github,
-  Globe,
-  FileText,
-  Shield
+  ShieldCheck,
+  CheckCircle2
 } from 'lucide-react';
 
 interface HeaderProps {
@@ -18,11 +15,10 @@ interface HeaderProps {
   setSearchQuery: (q: string) => void;
   selectedCategory: string;
   setSelectedCategory: (cat: string) => void;
-  onOpenGitHubModal: () => void;
-  onOpenDomainModal: () => void;
   onOpenAccount: () => void;
-  activeView: 'shop' | 'account' | 'checkout' | 'auth' | 'privacy' | 'terms';
-  setActiveView: (view: 'shop' | 'account' | 'checkout' | 'auth' | 'privacy' | 'terms') => void;
+  onOpenSignIn: () => void;
+  activeView: 'shop' | 'account' | 'checkout' | 'auth' | 'privacy' | 'terms' | 'admin';
+  setActiveView: (view: 'shop' | 'account' | 'checkout' | 'auth' | 'privacy' | 'terms' | 'admin') => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -30,27 +26,26 @@ export const Header: React.FC<HeaderProps> = ({
   setSearchQuery,
   selectedCategory,
   setSelectedCategory,
-  onOpenGitHubModal,
-  onOpenDomainModal,
   onOpenAccount,
+  onOpenSignIn,
   activeView,
   setActiveView
 }) => {
-  const { user, isAuthenticated, logout } = useAuth();
-  const { itemCount, openCart, wishlist } = useCart();
+  const { user, isAuthenticated, isAdmin, logout } = useAuth();
+  const { itemCount, openCart } = useCart();
 
   const categories = [
     { id: 'all', label: 'All Catalog' },
-    { id: 'crafts', label: 'Himalayan Crafts' },
+    { id: 'crafts', label: 'Artisan Crafts' },
     { id: 'organic', label: 'Tea & Organic' },
     { id: 'gear', label: 'Mountain & Living' },
-    { id: 'clothing', label: 'Apparel' },
-    { id: 'tech', label: 'Tech Essentials' }
+    { id: 'clothing', label: 'Apparel & Dhaka' },
+    { id: 'tech', label: 'Modern Essentials' }
   ];
 
   return (
     <header className="sticky top-0 z-40 bg-[#FBF6E8] border-b border-[#14161A]/10">
-      {/* Top Banner with Himalayan logistics and Custom Domain verification */}
+      {/* Top Banner */}
       <div className="bg-[#232D0F] text-[#F5EEDC] text-xs py-2 px-4 flex items-center justify-between border-b border-[#3B4A1F]">
         <div className="flex items-center gap-2 mx-auto sm:mx-0">
           <span className="inline-block w-1.5 h-1.5 rounded-xs bg-[#B8F235]" />
@@ -59,15 +54,17 @@ export const Header: React.FC<HeaderProps> = ({
           </span>
         </div>
         
-        <div className="hidden sm:flex items-center gap-3 text-[11px]">
-          <button
-            onClick={onOpenDomainModal}
-            className="flex items-center gap-1.5 px-2.5 py-1 rounded-xs bg-[#3B4A1F] hover:bg-[#556B2F] text-[#F5EEDC] transition-colors font-medium cursor-pointer"
-          >
-            <Globe className="w-3.5 h-3.5 text-[#B8F235]" />
-            <span>Custom Domain</span>
-          </button>
-          
+        <div className="hidden sm:flex items-center gap-4 text-[11px]">
+          {isAdmin && (
+            <button
+              onClick={() => setActiveView('admin')}
+              className="text-[#B8F235] hover:underline font-semibold flex items-center gap-1 cursor-pointer"
+            >
+              <ShieldCheck className="w-3.5 h-3.5" />
+              <span>Admin Mode Active</span>
+            </button>
+          )}
+
           <button
             onClick={() => setActiveView('privacy')}
             className="hover:text-white transition-colors cursor-pointer"
@@ -79,14 +76,6 @@ export const Header: React.FC<HeaderProps> = ({
             className="hover:text-white transition-colors cursor-pointer"
           >
             Terms
-          </button>
-
-          <button
-            onClick={onOpenGitHubModal}
-            className="flex items-center gap-1 px-2 py-1 rounded-xs bg-[#14161A] hover:bg-black text-[#F5EEDC] transition-colors font-medium cursor-pointer"
-          >
-            <Github className="w-3.5 h-3.5" />
-            <span>GitHub</span>
           </button>
 
           <span className="text-[#B8F235] font-mono tabular-nums">NPR (Rs.)</span>
@@ -115,7 +104,7 @@ export const Header: React.FC<HeaderProps> = ({
                 </span>
               </div>
               <p className="text-[10px] tracking-[0.18em] uppercase text-[#5C6678] font-medium -mt-1 hidden sm:block">
-                Himalayan Marketplace
+                Authentic Marketplace of Nepal
               </p>
             </div>
           </div>
@@ -144,34 +133,26 @@ export const Header: React.FC<HeaderProps> = ({
 
           {/* Actions & Profile */}
           <div className="flex items-center gap-2 sm:gap-3">
-            
-            {/* Custom Domain Quick Mobile Access */}
-            <button
-              onClick={onOpenDomainModal}
-              className="sm:hidden p-2 rounded-md border border-[#14161A]/10 text-[#14161A] hover:bg-white"
-              title="Custom Domain"
-            >
-              <Globe className="w-4 h-4" />
-            </button>
-
-            {/* Wishlist */}
-            <button
-              onClick={() => setActiveView('shop')}
-              className="relative p-2 rounded-md hover:bg-white text-[#14161A] border border-transparent hover:border-[#14161A]/10 transition-colors"
-              title="Saved items"
-            >
-              <Heart className="w-4 h-4" />
-              {wishlist.length > 0 && (
-                <span className="absolute top-1 right-1 w-3.5 h-3.5 rounded-xs bg-[#B3341F] text-white text-[9px] font-bold flex items-center justify-center tabular-nums">
-                  {wishlist.length}
-                </span>
-              )}
-            </button>
+            {/* Admin Panel Button (If logged in as admin) */}
+            {isAdmin && (
+              <button
+                onClick={() => setActiveView('admin')}
+                className={`flex items-center gap-1.5 px-3 py-2 rounded-md font-bold text-xs transition-colors cursor-pointer border ${
+                  activeView === 'admin'
+                    ? 'bg-[#B8F235] text-[#232D0F] border-[#B8F235]'
+                    : 'bg-[#232D0F] text-[#B8F235] border-[#3B4A1F] hover:bg-[#3B4A1F]'
+                }`}
+                title="Open Admin Management Panel"
+              >
+                <ShieldCheck className="w-4 h-4" />
+                <span className="hidden sm:inline">Admin Panel</span>
+              </button>
+            )}
 
             {/* Shopping Cart Button */}
             <button
               onClick={openCart}
-              className="flex items-center gap-2 px-3 py-2 rounded-md bg-[#3B4A1F] text-[#F5EEDC] hover:bg-[#232D0F] transition-colors"
+              className="flex items-center gap-2 px-3 py-2 rounded-md bg-[#3B4A1F] text-[#F5EEDC] hover:bg-[#232D0F] transition-colors cursor-pointer"
             >
               <div className="relative">
                 <ShoppingBag className="w-4 h-4 text-[#B8F235]" />
@@ -189,7 +170,7 @@ export const Header: React.FC<HeaderProps> = ({
               <div className="flex items-center gap-1.5 pl-2 border-l border-[#14161A]/10">
                 <button
                   onClick={onOpenAccount}
-                  className={`flex items-center gap-2 px-2.5 py-1.5 rounded-md transition-colors ${
+                  className={`flex items-center gap-2 px-2.5 py-1.5 rounded-md transition-colors cursor-pointer ${
                     activeView === 'account'
                       ? 'bg-[#3B4A1F] text-[#F5EEDC]'
                       : 'hover:bg-white text-[#14161A]'
@@ -198,25 +179,30 @@ export const Header: React.FC<HeaderProps> = ({
                   <div className="w-6 h-6 rounded-xs bg-[#3B4A1F] text-[#B8F235] font-bold text-xs flex items-center justify-center">
                     {user.name.charAt(0).toUpperCase()}
                   </div>
-                  <span className="text-xs font-medium truncate max-w-[100px] hidden lg:block">
-                    {user.name}
-                  </span>
+                  <div className="text-left hidden lg:block">
+                    <span className="text-xs font-medium truncate max-w-[100px] block leading-tight">
+                      {user.name}
+                    </span>
+                    <span className="text-[9px] text-[#556B2F] font-bold block uppercase leading-none">
+                      {user.role === 'admin' ? 'Administrator' : 'Verified Buyer'}
+                    </span>
+                  </div>
                 </button>
                 <button
                   onClick={logout}
                   title="Sign out"
-                  className="p-1.5 rounded-md text-[#5C6678] hover:text-[#B3341F] hover:bg-white transition-colors"
+                  className="p-1.5 rounded-md text-[#5C6678] hover:text-[#B3341F] hover:bg-white transition-colors cursor-pointer"
                 >
                   <LogOut className="w-4 h-4" />
                 </button>
               </div>
             ) : (
               <button
-                onClick={() => setActiveView('auth')}
+                onClick={onOpenSignIn}
                 className="flex items-center gap-1.5 px-3 py-2 rounded-md bg-[#3B4A1F] hover:bg-[#232D0F] text-[#F5EEDC] text-xs font-semibold transition-colors cursor-pointer"
               >
-                <User className="w-3.5 h-3.5" />
-                <span>Account</span>
+                <User className="w-3.5 h-3.5 text-[#B8F235]" />
+                <span>Sign In</span>
               </button>
             )}
 
@@ -237,7 +223,7 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
         </div>
 
-        {/* Category Navigation (Zero Pill Discipline - Clean Segmented Tabs) */}
+        {/* Category Navigation */}
         <nav className="flex items-center gap-1 overflow-x-auto pt-3 pb-1 border-t border-[#14161A]/5 mt-2">
           {categories.map((cat) => (
             <button

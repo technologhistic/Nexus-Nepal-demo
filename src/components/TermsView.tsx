@@ -41,7 +41,7 @@ export const TermsView: React.FC<TermsViewProps> = ({ onBackToShop }) => {
 
           <section>
             <h2 className="text-base font-serif font-bold text-[#14161A] mb-2">
-              2. Authentic Himalayan Provenance & Artisan Representation
+              2. Authentic Nepal Provenance & Artisan Representation
             </h2>
             <p className="text-[#5C6678]">
               Nexus Nepal partners directly with recognized cooperatives, craft clusters, and organic producers across Nepal. All geographical indications (such as Mustang Pashmina, Palpali Dhaka, Ilam Orthodox Tea, and Patan Bell-Metalcrafts) represent genuine regional origin. Any claims regarding materials, weight, and specifications are verified by physical inspection prior to warehousing.

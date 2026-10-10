@@ -35,7 +35,7 @@ export const PrivacyPolicyView: React.FC<PrivacyPolicyViewProps> = ({ onBackToSh
               1. Our Privacy Commitment
             </h2>
             <p className="text-[#5C6678]">
-              Nexus Nepal ("we", "our", or "us") operates the marketplace for authentic Himalayan handicrafts, organic produce, and regional specialties. We are committed to protecting your personal information. We do not sell, rent, trade, or monetize customer data to third-party advertisers or data brokers under any circumstances.
+              Nexus Nepal ("we", "our", or "us") operates the marketplace for authentic Nepali handicrafts, organic produce, and regional specialties. We are committed to protecting your personal information. We do not sell, rent, trade, or monetize customer data to third-party advertisers or data brokers under any circumstances.
             </p>
           </section>
 

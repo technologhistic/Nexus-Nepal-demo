@@ -1,7 +1,7 @@
 import React from 'react';
 import { Product } from '../types';
 import { useCart } from '../context/CartContext';
-import { MapPin, Plus, Heart } from 'lucide-react';
+import { MapPin, Plus } from 'lucide-react';
 
 interface ProductCardProps {
   product: Product;
@@ -9,8 +9,7 @@ interface ProductCardProps {
 }
 
 export const ProductCard: React.FC<ProductCardProps> = ({ product, onSelect }) => {
-  const { addToCart, toggleWishlist, isInWishlist } = useCart();
-  const isWishlisted = isInWishlist(product.id);
+  const { addToCart } = useCart();
 
   const discountPercent = product.originalPrice
     ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
@@ -36,22 +35,6 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onSelect }) =
             {discountPercent}% off
           </span>
         )}
-
-        {/* Wishlist Button */}
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            toggleWishlist(product.id);
-          }}
-          className={`absolute top-3 right-3 p-2 rounded-md transition-colors ${
-            isWishlisted
-              ? 'bg-[#B3341F] text-white'
-              : 'bg-white/90 text-[#14161A] hover:bg-white'
-          }`}
-          aria-label={isWishlisted ? "Remove from saved items" : "Save item"}
-        >
-          <Heart className={`w-4 h-4 ${isWishlisted ? 'fill-current' : ''}`} />
-        </button>
 
         {/* Origin Metadata */}
         <div className="absolute bottom-2.5 left-2.5 px-2 py-1 bg-[#14161A]/80 text-[#F5EEDC] text-[11px] font-medium flex items-center gap-1 rounded-xs">

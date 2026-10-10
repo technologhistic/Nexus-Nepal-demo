@@ -90,7 +90,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ onProceedToCheckout }) =
               </div>
               <h3 className="font-serif font-bold text-lg text-[#232D0F]">Your cart is empty</h3>
               <p className="text-xs mt-1 max-w-[240px]">
-                Explore authentic Himalayan crafts, organic Ilam teas, and mountain gear.
+                Explore authentic artisan crafts, organic Ilam teas, and mountain gear.
               </p>
             </div>
           ) : (
@@ -158,7 +158,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ onProceedToCheckout }) =
                   type="text"
                   value={inputCoupon}
                   onChange={(e) => setInputCoupon(e.target.value)}
-                  placeholder="Promo code (e.g. HIMALAYA10)"
+                  placeholder="Promo code (e.g. NEPAL10)"
                   className="w-full text-xs uppercase bg-[#FBF6E8] border border-[#3B4A1F]/20 rounded-xl py-2 pl-8 pr-3 text-[#14161A] focus:outline-none focus:border-[#3B4A1F]"
                 />
                 <Tag className="absolute left-2.5 top-2.5 w-3.5 h-3.5 text-[#5C6678]" />
