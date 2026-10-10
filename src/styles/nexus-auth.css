@@ -1,0 +1,666 @@
+/* Nexus Nepal Signature Dual-Panel Auth Styles */
+:root {
+  --olive: #3B4A1F;
+  --olive-deep: #232D0F;
+  --olive-mid: #556B2F;
+  --lime: #B8F235;
+  --lime-soft: #D6FF6A;
+  --creme: #F5EEDC;
+  --black: #14161A;
+  --slate: #5C6678;
+  --error: #B3341F;
+}
+
+.nexus-auth-wrapper {
+  background: #F1E7CC;
+  background: radial-gradient(900px 520px at 90% -10%, rgba(184, 242, 39, 0.30), transparent 60%),
+              radial-gradient(700px 520px at -10% 110%, rgba(85, 107, 47, 0.24), transparent 60%),
+              linear-gradient(160deg, #FBF6E8, #F1E7CC 55%, #E8DCBA);
+  color: var(--black);
+  font: 16px/1.4 Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.nexus-auth-wrapper .page {
+  position: relative;
+  width: 100%;
+  max-width: 940px;
+}
+
+.nexus-auth-wrapper .sr {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
+}
+
+/* ---------- card ---------- */
+.nexus-auth-wrapper .card {
+  --login-clip: polygon(0 0, 48% 0, 60% 100%, 0 100%);
+  --signup-clip: polygon(52% 0, 100% 0, 100% 100%, 40% 100%);
+  --gone-left: polygon(-12% 0, -12% 0, 0 100%, 0 100%);
+  --gone-right: polygon(112% 0, 112% 0, 100% 100%, 100% 100%);
+  --dur: 1.4s;
+  --ease: cubic-bezier(0.65, 0, 0.35, 1);
+  position: relative;
+  width: 100%;
+  height: 580px;
+  border-radius: 26px;
+  overflow: hidden;
+  background: var(--olive);
+  box-shadow: 0 30px 60px rgba(35, 45, 15, 0.30), 0 0 0 1px rgba(35, 45, 15, 0.08);
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
+
+.nexus-auth-wrapper .brand {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 0;
+  background: radial-gradient(520px 360px at 78% 18%, rgba(184, 242, 53, 0.20), transparent 65%),
+              radial-gradient(600px 400px at 10% 100%, rgba(85, 107, 47, 0.5), transparent 65%),
+              linear-gradient(135deg, #4F6428 0%, var(--olive) 40%, var(--olive-deep) 100%);
+}
+
+.nexus-auth-wrapper .ridge {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 44%;
+  opacity: 0.55;
+}
+
+.nexus-auth-wrapper .brand-copy {
+  position: absolute;
+  color: var(--creme);
+  opacity: 0;
+  -webkit-transform: translateY(10px);
+  transform: translateY(10px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+  pointer-events: none;
+}
+
+.nexus-auth-wrapper .eyebrow {
+  display: block;
+  margin-bottom: 18px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--lime);
+}
+
+.nexus-auth-wrapper .brand-copy h2 {
+  font: 400 44px/1.04 Georgia, "Times New Roman", serif;
+  letter-spacing: -0.02em;
+}
+
+.nexus-auth-wrapper .brand-copy h2 em {
+  display: block;
+  color: var(--lime-soft);
+  font-style: italic;
+}
+
+.nexus-auth-wrapper .brand-copy p {
+  margin-top: 18px;
+  max-width: 30ch;
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(245, 238, 220, 0.72);
+}
+
+.nexus-auth-wrapper .is-login.brand-copy {
+  left: 64%;
+  top: 50%;
+  margin-top: -110px;
+  width: 30%;
+}
+
+.nexus-auth-wrapper .is-signup.brand-copy {
+  left: 6%;
+  top: 50%;
+  margin-top: -110px;
+  width: 32%;
+}
+
+.nexus-auth-wrapper .cream {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+  background: radial-gradient(500px 300px at 20% 0%, rgba(255, 255, 255, 0.8), transparent 60%),
+              linear-gradient(160deg, #FFFFFF, #F7F0DD 60%, #F1E7CC);
+  -webkit-clip-path: var(--login-clip);
+  clip-path: var(--login-clip);
+}
+
+#v-signup:checked ~ .card .cream {
+  -webkit-clip-path: var(--signup-clip);
+  clip-path: var(--signup-clip);
+  -webkit-animation: toSignup var(--dur) forwards;
+  animation: toSignup var(--dur) forwards;
+}
+
+#v-login:checked ~ .card .cream {
+  -webkit-animation: toLogin var(--dur) forwards;
+  animation: toLogin var(--dur) forwards;
+}
+
+@-webkit-keyframes toSignup {
+  0% {
+    -webkit-clip-path: var(--login-clip);
+    -webkit-animation-timing-function: var(--ease);
+  }
+  44% {
+    -webkit-clip-path: var(--gone-left);
+  }
+  44.1% {
+    -webkit-clip-path: var(--gone-right);
+    -webkit-animation-timing-function: var(--ease);
+  }
+  100% {
+    -webkit-clip-path: var(--signup-clip);
+  }
+}
+
+@keyframes toSignup {
+  0% {
+    -webkit-clip-path: var(--login-clip);
+    clip-path: var(--login-clip);
+    animation-timing-function: var(--ease);
+  }
+  44% {
+    -webkit-clip-path: var(--gone-left);
+    clip-path: var(--gone-left);
+  }
+  44.1% {
+    -webkit-clip-path: var(--gone-right);
+    clip-path: var(--gone-right);
+    animation-timing-function: var(--ease);
+  }
+  100% {
+    -webkit-clip-path: var(--signup-clip);
+    clip-path: var(--signup-clip);
+  }
+}
+
+@-webkit-keyframes toLogin {
+  0% {
+    -webkit-clip-path: var(--signup-clip);
+    -webkit-animation-timing-function: var(--ease);
+  }
+  44% {
+    -webkit-clip-path: var(--gone-right);
+  }
+  44.1% {
+    -webkit-clip-path: var(--gone-left);
+    -webkit-animation-timing-function: var(--ease);
+  }
+  100% {
+    -webkit-clip-path: var(--login-clip);
+  }
+}
+
+@keyframes toLogin {
+  0% {
+    -webkit-clip-path: var(--signup-clip);
+    clip-path: var(--signup-clip);
+    animation-timing-function: var(--ease);
+  }
+  44% {
+    -webkit-clip-path: var(--gone-right);
+    clip-path: var(--gone-right);
+  }
+  44.1% {
+    -webkit-clip-path: var(--gone-left);
+    clip-path: var(--gone-left);
+  }
+  100% {
+    -webkit-clip-path: var(--login-clip);
+    clip-path: var(--login-clip);
+  }
+}
+
+/* brand copy per view */
+#v-signup:not(:checked) ~ .card .is-login.brand-copy,
+#v-signup:checked ~ .card .is-signup.brand-copy {
+  opacity: 1;
+  -webkit-transform: none;
+  transform: none;
+  transition: opacity 0.6s ease 0.75s, transform 0.6s ease 0.75s;
+}
+
+/* forms per view */
+.nexus-auth-wrapper .form {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0s linear 0.25s;
+}
+
+.nexus-auth-wrapper .form.is-login {
+  left: 6%;
+  width: 38%;
+}
+
+.nexus-auth-wrapper .form.is-signup {
+  left: 60%;
+  width: 34%;
+}
+
+.nexus-auth-wrapper .form > * {
+  opacity: 0;
+  -webkit-transform: translateY(12px);
+  transform: translateY(12px);
+}
+
+#v-signup:not(:checked) ~ .card .form.is-login,
+#v-signup:checked ~ .card .form.is-signup {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.01s linear 0.75s, visibility 0s linear 0.75s;
+}
+
+#v-signup:not(:checked) ~ .card .form.is-login > *,
+#v-signup:checked ~ .card .form.is-signup > * {
+  opacity: 1;
+  -webkit-transform: none;
+  transform: none;
+  transition: opacity 0.5s ease calc(0.8s + var(--i, 0) * 0.06s),
+              transform 0.5s ease calc(0.8s + var(--i, 0) * 0.06s);
+}
+
+/* first paint: no animation */
+#v-init:checked ~ .card .form,
+#v-init:checked ~ .card .form > *,
+#v-init:checked ~ .card .brand-copy {
+  transition: none !important;
+}
+
+.nexus-auth-wrapper .logo {
+  width: 176px;
+  height: 61px;
+  margin-bottom: 18px;
+  background: transparent no-repeat left center;
+  background-size: contain;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 176 61'%3E%3Crect width='38' height='38' rx='10' fill='%233B4A1F'/%3E%3Cpath d='M10 28V12l18 16V12' stroke='%23B8F235' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3Ctext x='48' y='24' font-family='Georgia, serif' font-size='16' font-weight='bold' fill='%23232D0F'%3ENEXUS%3C/text%3E%3Ctext x='112' y='24' font-family='Georgia, serif' font-size='16' font-weight='normal' fill='%23556B2F'%3ENEPAL%3C/text%3E%3Ctext x='49' y='36' font-family='Inter, sans-serif' font-size='8' letter-spacing='2' font-weight='600' fill='%233B4A1F'%3EHIMALAYAN COMMERCE%3C/text%3E%3C/svg%3E");
+}
+
+.nexus-auth-wrapper .form h1 {
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--olive-deep);
+}
+
+.nexus-auth-wrapper .form h1:after {
+  content: "";
+  display: block;
+  width: 28px;
+  height: 3px;
+  border-radius: 2px;
+  margin-top: 8px;
+  background: var(--lime);
+}
+
+.nexus-auth-wrapper .fields {
+  margin-top: 16px;
+}
+
+.nexus-auth-wrapper .field {
+  position: relative;
+  padding-top: 14px;
+  margin-bottom: 6px;
+}
+
+.nexus-auth-wrapper .field input {
+  display: block;
+  width: 100%;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  font: inherit;
+  font-size: 14px;
+  color: var(--black);
+  padding: 8px 30px 8px 0;
+  border-bottom: 1px solid rgba(59, 74, 31, 0.30);
+  outline: 0;
+}
+
+.nexus-auth-wrapper .field label {
+  position: absolute;
+  left: 0;
+  top: 22px;
+  font-size: 13px;
+  color: var(--slate);
+  pointer-events: none;
+  -webkit-transform-origin: left top;
+  transform-origin: left top;
+  transition: transform 0.2s ease, font-size 0.2s ease, color 0.2s ease;
+}
+
+.nexus-auth-wrapper .field input:focus + label,
+.nexus-auth-wrapper .field input:not(:placeholder-shown) + label {
+  -webkit-transform: translateY(-17px);
+  transform: translateY(-17px);
+  font-size: 10.5px;
+  letter-spacing: 0.04em;
+  color: var(--olive-mid);
+}
+
+.nexus-auth-wrapper .bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--lime), var(--olive-mid));
+  -webkit-transform: scaleX(0);
+  transform: scaleX(0);
+  -webkit-transform-origin: left;
+  transform-origin: left;
+  transition: transform 0.35s ease;
+}
+
+.nexus-auth-wrapper .field input:focus ~ .bar {
+  -webkit-transform: scaleX(1);
+  transform: scaleX(1);
+}
+
+.nexus-auth-wrapper .ico {
+  position: absolute;
+  right: 0;
+  bottom: 9px;
+  width: 16px;
+  height: 16px;
+  color: var(--slate);
+}
+
+.nexus-auth-wrapper button.ico {
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+.nexus-auth-wrapper .ico svg {
+  display: block;
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.nexus-auth-wrapper .err {
+  display: block;
+  max-height: 0;
+  overflow: hidden;
+  font-size: 11px;
+  color: var(--error);
+  transition: max-height 0.2s ease;
+}
+
+.nexus-auth-wrapper .field.invalid input {
+  border-bottom-color: var(--error);
+}
+
+.nexus-auth-wrapper .field.invalid .err {
+  max-height: 20px;
+  margin-top: 5px;
+}
+
+.nexus-auth-wrapper .row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 8px;
+  font-size: 12px;
+}
+
+.nexus-auth-wrapper .remember {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  color: var(--slate);
+}
+
+.nexus-auth-wrapper .remember input {
+  position: absolute;
+  opacity: 0;
+}
+
+.nexus-auth-wrapper .toggle {
+  display: flex;
+  width: 34px;
+  height: 19px;
+  padding: 2px;
+  margin-right: 8px;
+  border-radius: 10px;
+  background: var(--slate);
+  transition: background-color 0.25s;
+}
+
+.nexus-auth-wrapper .toggle:after {
+  content: "";
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #fff;
+  transition: transform 0.25s, background-color 0.25s;
+}
+
+.nexus-auth-wrapper .remember input:checked + .toggle {
+  background: var(--olive);
+}
+
+.nexus-auth-wrapper .remember input:checked + .toggle:after {
+  -webkit-transform: translateX(15px);
+  transform: translateX(15px);
+  background: var(--lime);
+}
+
+.nexus-auth-wrapper .link {
+  font-weight: 600;
+  color: var(--olive);
+  text-decoration: none;
+  cursor: pointer;
+  background: none;
+  border: 0;
+  padding: 0;
+  font-family: inherit;
+  font-size: inherit;
+  border-bottom: 2px solid var(--lime);
+}
+
+.nexus-auth-wrapper .meter {
+  display: flex;
+  margin-top: 8px;
+}
+
+.nexus-auth-wrapper .meter i {
+  flex: 1;
+  height: 3px;
+  margin-right: 4px;
+  border-radius: 2px;
+  background: rgba(59, 74, 31, 0.15);
+  transition: background 0.25s;
+}
+
+.nexus-auth-wrapper .meter i:last-child {
+  margin-right: 0;
+}
+
+.nexus-auth-wrapper .meter[data-s="1"] i:nth-child(-n+1) {
+  background: #D0742F;
+}
+
+.nexus-auth-wrapper .meter[data-s="2"] i:nth-child(-n+2) {
+  background: #C9A52B;
+}
+
+.nexus-auth-wrapper .meter[data-s="3"] i:nth-child(-n+3) {
+  background: var(--olive-mid);
+}
+
+.nexus-auth-wrapper .meter[data-s="4"] i:nth-child(-n+4) {
+  background: var(--lime);
+}
+
+.nexus-auth-wrapper .hint {
+  margin-top: 6px;
+  font-size: 11px;
+  color: var(--slate);
+}
+
+.nexus-auth-wrapper .cta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 54px;
+  margin-top: 16px;
+  padding: 0 7px 0 22px;
+  border: 0;
+  border-radius: 27px;
+  background: #3B4A1F;
+  background: linear-gradient(135deg, #556B2F, #3B4A1F 55%, #232D0F);
+  box-shadow: 0 10px 22px rgba(35, 45, 15, 0.30), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  color: #fff;
+  font: 600 15px/1 Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  cursor: pointer;
+  transition: transform 0.15s, opacity 0.25s;
+}
+
+.nexus-auth-wrapper .cta:hover {
+  filter: brightness(1.05);
+}
+
+.nexus-auth-wrapper .cta:active {
+  transform: scale(0.99);
+}
+
+.nexus-auth-wrapper .arrow {
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #D6FF6A, #B8F235 60%, #9BD91C);
+  color: var(--olive-deep);
+  font-size: 17px;
+}
+
+.nexus-auth-wrapper .cta[disabled] {
+  opacity: 0.85;
+  cursor: progress;
+}
+
+.nexus-auth-wrapper .status {
+  min-height: 16px;
+  margin-top: 10px;
+  font-size: 12px;
+  color: var(--olive);
+}
+
+.nexus-auth-wrapper .status.bad {
+  color: var(--error);
+}
+
+.nexus-auth-wrapper .switch {
+  margin-top: 12px;
+  font-size: 12.5px;
+  color: var(--slate);
+}
+
+.nexus-auth-wrapper .hp {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+/* ---------- phones: vertical layout ---------- */
+@media (max-width: 760px) {
+  .nexus-auth-wrapper .card {
+    --login-clip: polygon(0 25%, 100% 19%, 100% 100%, 0 100%);
+    --signup-clip: polygon(0 19%, 100% 25%, 100% 100%, 0 100%);
+    --gone-left: polygon(0 100%, 100% 100%, 100% 112%, 0 112%);
+    --gone-right: polygon(0 100%, 100% 100%, 100% 112%, 0 112%);
+    height: auto;
+    min-height: 690px;
+    max-width: 440px;
+    margin: 0 auto;
+  }
+  .nexus-auth-wrapper .ridge {
+    top: 0;
+    bottom: auto;
+    height: 20%;
+    opacity: 0.25;
+    -webkit-transform: scaleY(-1);
+    transform: scaleY(-1);
+  }
+  .nexus-auth-wrapper .is-login.brand-copy,
+  .nexus-auth-wrapper .is-signup.brand-copy {
+    left: 7%;
+    width: 86%;
+    top: 22px;
+    margin-top: 0;
+  }
+  .nexus-auth-wrapper .eyebrow {
+    margin-bottom: 8px;
+  }
+  .nexus-auth-wrapper .brand-copy h2 {
+    font-size: 28px;
+  }
+  .nexus-auth-wrapper .brand-copy h2 em {
+    display: inline;
+    margin-left: 0.25em;
+  }
+  .nexus-auth-wrapper .brand-copy p {
+    display: none;
+  }
+  .nexus-auth-wrapper .form.is-login,
+  .nexus-auth-wrapper .form.is-signup {
+    left: 8%;
+    width: 84%;
+    top: 27%;
+    justify-content: flex-start;
+    padding-bottom: 20px;
+  }
+  .nexus-auth-wrapper .logo {
+    width: 148px;
+    height: 51px;
+    margin-bottom: 12px;
+  }
+  .nexus-auth-wrapper .fields {
+    margin-top: 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nexus-auth-wrapper .card {
+    --dur: 0.01s;
+  }
+  .nexus-auth-wrapper .card * {
+    transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+  }
+}

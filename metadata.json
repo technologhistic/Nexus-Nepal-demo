@@ -1,0 +1,6 @@
+{
+  "name": "Nexus Nepal",
+  "description": "Authentic Himalayan marketplace and modern commerce for Nepal, featuring artisanal crafts, mountain gear, and local specialties.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

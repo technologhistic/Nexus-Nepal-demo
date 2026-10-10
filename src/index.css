@@ -1,0 +1,20 @@
+@import "tailwindcss";
+@import "./styles/nexus-auth.css";
+
+@layer base {
+  body {
+    background-color: #FBF6E8;
+    color: #14161A;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+/* Custom scrollbar utility */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
