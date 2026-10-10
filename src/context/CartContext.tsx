@@ -142,7 +142,6 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     if (user) {
       user.orders = [newOrder, ...(user.orders || [])];
-      user.rewardPoints += Math.floor(total * 0.05); // 5% rewards
       localStorage.setItem('nexus_user', JSON.stringify(user));
     }
 

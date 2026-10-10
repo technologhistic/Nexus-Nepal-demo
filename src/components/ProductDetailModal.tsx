@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Product } from '../types';
 import { useCart } from '../context/CartContext';
-import { X, Star, MapPin, Check, Plus, Minus, ShieldCheck, Truck, RefreshCw } from 'lucide-react';
+import { X, MapPin, Check, Plus, Minus, ShieldCheck, Truck, RotateCcw } from 'lucide-react';
 
 interface ProductDetailModalProps {
   product: Product | null;
@@ -20,30 +20,31 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product,
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in">
-      <div className="relative w-full max-w-3xl bg-white rounded-3xl overflow-hidden shadow-2xl border border-[#3B4A1F]/20 max-h-[90vh] flex flex-col md:flex-row">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
+      <div className="relative w-full max-w-3xl bg-white rounded-lg overflow-hidden border border-[#14161A]/15 shadow-xl max-h-[90vh] flex flex-col md:flex-row">
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 z-10 p-2 rounded-full bg-white/80 hover:bg-white text-black shadow-md transition-colors"
+          className="absolute top-4 right-4 z-10 p-2 rounded-md bg-white/90 hover:bg-white text-[#14161A] shadow-xs transition-colors"
+          aria-label="Close details"
         >
           <X className="w-5 h-5" />
         </button>
 
         {/* Product Media */}
-        <div className="w-full md:w-1/2 relative bg-[#F5EEDC] min-h-[280px] md:min-h-full">
+        <div className="w-full md:w-1/2 relative bg-[#F5EEDC] min-h-[260px] md:min-h-full">
           <img
             src={product.image}
             alt={product.name}
             className="w-full h-full object-cover"
           />
-          <div className="absolute bottom-4 left-4 right-4 p-3 rounded-xl bg-black/60 backdrop-blur-md text-[#F5EEDC] text-xs">
-            <div className="flex items-center gap-1.5 text-[#B8F235] font-bold mb-0.5">
+          <div className="absolute bottom-3 left-3 right-3 p-3 bg-[#14161A]/85 text-[#F5EEDC] text-xs rounded-sm">
+            <div className="flex items-center gap-1.5 text-[#B8F235] font-semibold mb-0.5">
               <MapPin className="w-3.5 h-3.5" />
-              <span>Provenance: {product.origin}</span>
+              <span>Origin: {product.origin}</span>
             </div>
-            <p className="text-[11px] text-white/80">
-              Guaranteed Authentic Heritage Product from Nepal
+            <p className="text-[11px] text-[#F5EEDC]/80">
+              Sourced directly from cooperatives and producers in Nepal.
             </p>
           </div>
         </div>
@@ -52,35 +53,24 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product,
         <div className="w-full md:w-1/2 p-6 md:p-8 flex flex-col justify-between overflow-y-auto">
           <div>
             {product.artisanTag && (
-              <span className="inline-block text-[11px] font-bold uppercase tracking-wider text-[#556B2F] bg-[#B8F235]/30 px-2.5 py-1 rounded-md mb-2">
+              <p className="text-xs font-semibold text-[#556B2F] tracking-wide mb-1">
                 {product.artisanTag}
-              </span>
+              </p>
             )}
 
-            <h2 className="text-xl md:text-2xl font-serif font-bold text-[#232D0F] leading-snug">
+            <h2 className="text-xl md:text-2xl font-serif font-bold text-[#14161A] leading-snug">
               {product.name}
             </h2>
 
-            {/* Rating & Stock */}
-            <div className="flex items-center gap-3 mt-2.5">
-              <div className="flex items-center text-amber-500 gap-1 text-xs font-bold">
-                <Star className="w-4 h-4 fill-current" />
-                <span>{product.rating}</span>
-                <span className="text-[#5C6678] font-normal">({product.reviewCount} reviews)</span>
-              </div>
-              <span className="text-xs px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-medium">
-                In Stock ({product.stockCount} left)
-              </span>
-            </div>
-
             {/* Price */}
-            <div className="mt-4 flex items-baseline gap-3">
-              <span className="text-2xl font-extrabold text-[#232D0F]">
-                Rs. {product.price.toLocaleString()}
+            <div className="mt-3 flex items-baseline gap-2">
+              <span className="text-xs text-[#5C6678]">NPR</span>
+              <span className="text-2xl font-bold text-[#14161A] tabular-nums">
+                {product.price.toLocaleString()}
               </span>
               {product.originalPrice && (
-                <span className="text-sm text-[#5C6678] line-through">
-                  Rs. {product.originalPrice.toLocaleString()}
+                <span className="text-sm text-[#5C6678] line-through tabular-nums ml-2">
+                  NPR {product.originalPrice.toLocaleString()}
                 </span>
               )}
             </div>
@@ -90,48 +80,70 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product,
               {product.description}
             </p>
 
+            {/* Specifications Table */}
+            <div className="mt-4 py-3 border-y border-[#14161A]/10 space-y-1.5 text-xs">
+              {product.materials && (
+                <div className="flex justify-between">
+                  <span className="text-[#5C6678]">Materials</span>
+                  <span className="font-medium text-[#14161A]">{product.materials}</span>
+                </div>
+              )}
+              {product.weight && (
+                <div className="flex justify-between">
+                  <span className="text-[#5C6678]">Weight</span>
+                  <span className="font-medium text-[#14161A]">{product.weight}</span>
+                </div>
+              )}
+              <div className="flex justify-between">
+                <span className="text-[#5C6678]">Availability</span>
+                <span className="font-medium text-[#14161A]">In Stock ({product.stockCount} units available)</span>
+              </div>
+            </div>
+
             {/* Features */}
             <div className="mt-4 space-y-1.5">
               {product.features.map((f, i) => (
-                <div key={i} className="flex items-center gap-2 text-xs text-[#232D0F]">
+                <div key={i} className="flex items-center gap-2 text-xs text-[#14161A]">
                   <Check className="w-3.5 h-3.5 text-[#556B2F] shrink-0" />
                   <span>{f}</span>
                 </div>
               ))}
             </div>
 
-            {/* Badges */}
-            <div className="mt-6 pt-4 border-t border-[#3B4A1F]/10 grid grid-cols-3 gap-2 text-center text-[10px] text-[#5C6678]">
-              <div className="flex flex-col items-center gap-1 p-1">
+            {/* Commercial terms */}
+            <div className="mt-6 pt-4 border-t border-[#14161A]/10 grid grid-cols-3 gap-2 text-center text-[10px] text-[#5C6678]">
+              <div className="flex flex-col items-center gap-1">
                 <Truck className="w-4 h-4 text-[#556B2F]" />
-                <span>Nepal Delivery</span>
+                <span>Nationwide Shipping</span>
               </div>
-              <div className="flex flex-col items-center gap-1 p-1">
+              <div className="flex flex-col items-center gap-1">
                 <ShieldCheck className="w-4 h-4 text-[#556B2F]" />
-                <span>100% Genuine</span>
+                <span>Verified Origin</span>
               </div>
-              <div className="flex flex-col items-center gap-1 p-1">
-                <RefreshCw className="w-4 h-4 text-[#556B2F]" />
-                <span>7-Day Return</span>
+              <div className="flex flex-col items-center gap-1">
+                <RotateCcw className="w-4 h-4 text-[#556B2F]" />
+                <span>7-Day Return Policy</span>
               </div>
             </div>
           </div>
 
           {/* Quantity & Add to Cart */}
-          <div className="mt-6 pt-4 border-t border-[#3B4A1F]/10 flex items-center gap-4">
-            <div className="flex items-center border border-[#3B4A1F]/20 rounded-xl bg-gray-50 p-1">
+          <div className="mt-6 pt-4 border-t border-[#14161A]/10 flex items-center gap-3">
+            <div className="flex items-center border border-[#14161A]/20 rounded-md bg-gray-50 p-1">
               <button
                 onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-                className="p-1.5 hover:bg-white rounded-lg text-black transition-colors"
+                className="p-1.5 hover:bg-white rounded text-black transition-colors"
+                aria-label="Decrease quantity"
               >
                 <Minus className="w-3.5 h-3.5" />
               </button>
-              <span className="w-8 text-center text-xs font-bold text-[#14161A]">
+              <span className="w-8 text-center text-xs font-semibold text-[#14161A] tabular-nums">
                 {quantity}
               </span>
               <button
                 onClick={() => setQuantity((q) => q + 1)}
-                className="p-1.5 hover:bg-white rounded-lg text-black transition-colors"
+                className="p-1.5 hover:bg-white rounded text-black transition-colors"
+                aria-label="Increase quantity"
               >
                 <Plus className="w-3.5 h-3.5" />
               </button>
@@ -139,11 +151,11 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product,
 
             <button
               onClick={handleAdd}
-              className="flex-1 h-11 rounded-xl bg-[#3B4A1F] hover:bg-[#232D0F] text-[#F5EEDC] text-xs md:text-sm font-bold flex items-center justify-center gap-2 shadow-lg shadow-[#3B4A1F]/20 active:scale-[0.99] transition-all"
+              className="flex-1 h-10 rounded-md bg-[#3B4A1F] hover:bg-[#232D0F] text-[#F5EEDC] text-xs md:text-sm font-semibold flex items-center justify-center gap-2 transition-colors active:scale-[0.99]"
             >
               <span>Add to Cart</span>
               <span className="text-[#B8F235]">
-                • Rs. {(product.price * quantity).toLocaleString()}
+                (NPR {(product.price * quantity).toLocaleString()})
               </span>
             </button>
           </div>

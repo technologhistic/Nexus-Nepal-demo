@@ -100,14 +100,14 @@ export const NexusAuthPage: React.FC<NexusAuthPageProps> = ({
       <div className="w-full max-w-[940px] mb-4 flex items-center justify-between">
         <button
           onClick={onBackToShop}
-          className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/70 hover:bg-white text-[#232D0F] font-semibold text-xs shadow-xs transition-colors cursor-pointer"
+          className="flex items-center gap-2 px-3.5 py-1.5 rounded-md bg-white/80 hover:bg-white text-[#232D0F] font-semibold text-xs shadow-xs transition-colors cursor-pointer border border-[#14161A]/10"
         >
           <ArrowLeft className="w-4 h-4 text-[#556B2F]" />
           <span>Back to Marketplace</span>
         </button>
 
         {user && (
-          <div className="flex items-center gap-2 text-xs text-[#3B4A1F] font-semibold bg-[#B8F235]/30 px-3 py-1.5 rounded-full">
+          <div className="flex items-center gap-2 text-xs text-[#3B4A1F] font-semibold bg-[#B8F235]/30 px-3 py-1.5 rounded-md">
             <Check className="w-3.5 h-3.5 text-[#3B4A1F]" />
             <span>Logged in as {user.name}</span>
           </div>

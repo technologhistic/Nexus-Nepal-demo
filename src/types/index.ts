@@ -6,12 +6,12 @@ export interface Product {
   categoryLabel: string;
   price: number; // in NPR
   originalPrice?: number;
-  rating: number;
-  reviewCount: number;
   origin: string; // e.g. "Palpa, Lumbini" | "Ilam, Koshi" | "Mustang, Gandaki"
   artisanTag?: string; // e.g. "Heritage Handloom", "Wild Cliff Harvest"
   inStock: boolean;
   stockCount: number;
+  weight?: string;
+  materials?: string;
   description: string;
   features: string[];
   image: string;
@@ -26,11 +26,9 @@ export interface User {
   id: string;
   name: string;
   email: string;
-  avatar?: string;
   phone?: string;
   city?: string;
   address?: string;
-  rewardPoints: number;
   orders: Order[];
 }
 

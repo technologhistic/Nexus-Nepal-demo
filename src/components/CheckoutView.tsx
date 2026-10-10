@@ -81,12 +81,12 @@ export const CheckoutView: React.FC<CheckoutViewProps> = ({ onBack, onOrderCompl
         <div className="flex-1 space-y-6">
           
           {/* Shipping Address Section */}
-          <div className="bg-white rounded-3xl p-6 md:p-8 border border-[#3B4A1F]/15 shadow-sm">
-            <div className="flex items-center gap-2.5 mb-6 text-[#232D0F]">
-              <div className="w-8 h-8 rounded-full bg-[#B8F235] flex items-center justify-center font-bold text-xs text-[#232D0F]">
+          <div className="bg-white rounded-lg p-6 md:p-8 border border-[#14161A]/10 shadow-xs">
+            <div className="flex items-center gap-2.5 mb-6 text-[#14161A]">
+              <div className="w-6 h-6 rounded-sm bg-[#3B4A1F] text-[#F5EEDC] flex items-center justify-center font-bold text-xs">
                 1
               </div>
-              <h2 className="font-serif font-bold text-xl">Delivery Destination (Nepal)</h2>
+              <h2 className="font-serif font-bold text-lg">Delivery Destination (Nepal)</h2>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -98,7 +98,7 @@ export const CheckoutView: React.FC<CheckoutViewProps> = ({ onBack, onOrderCompl
                   type="text"
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
-                  className="w-full text-xs md:text-sm bg-[#FBF6E8] border border-[#3B4A1F]/20 rounded-xl py-2.5 px-3.5 text-[#14161A] focus:outline-none focus:border-[#3B4A1F]"
+                  className="w-full text-xs md:text-sm bg-[#FBF6E8] border border-[#14161A]/20 rounded-md py-2.5 px-3.5 text-[#14161A] focus:outline-none focus:border-[#3B4A1F]"
                   placeholder="Full name"
                   required
                 />
@@ -112,7 +112,7 @@ export const CheckoutView: React.FC<CheckoutViewProps> = ({ onBack, onOrderCompl
                   type="tel"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
-                  className="w-full text-xs md:text-sm bg-[#FBF6E8] border border-[#3B4A1F]/20 rounded-xl py-2.5 px-3.5 text-[#14161A] focus:outline-none focus:border-[#3B4A1F]"
+                  className="w-full text-xs md:text-sm bg-[#FBF6E8] border border-[#14161A]/20 rounded-md py-2.5 px-3.5 text-[#14161A] focus:outline-none focus:border-[#3B4A1F]"
                   placeholder="+977 98XXXXXXXX"
                   required
                 />
@@ -125,7 +125,7 @@ export const CheckoutView: React.FC<CheckoutViewProps> = ({ onBack, onOrderCompl
                 <select
                   value={province}
                   onChange={(e) => setProvince(e.target.value)}
-                  className="w-full text-xs md:text-sm bg-[#FBF6E8] border border-[#3B4A1F]/20 rounded-xl py-2.5 px-3.5 text-[#14161A] focus:outline-none focus:border-[#3B4A1F]"
+                  className="w-full text-xs md:text-sm bg-[#FBF6E8] border border-[#14161A]/20 rounded-md py-2.5 px-3.5 text-[#14161A] focus:outline-none focus:border-[#3B4A1F]"
                 >
                   {PROVINCES.map((p) => (
                     <option key={p} value={p}>
@@ -143,7 +143,7 @@ export const CheckoutView: React.FC<CheckoutViewProps> = ({ onBack, onOrderCompl
                   type="text"
                   value={city}
                   onChange={(e) => setCity(e.target.value)}
-                  className="w-full text-xs md:text-sm bg-[#FBF6E8] border border-[#3B4A1F]/20 rounded-xl py-2.5 px-3.5 text-[#14161A] focus:outline-none focus:border-[#3B4A1F]"
+                  className="w-full text-xs md:text-sm bg-[#FBF6E8] border border-[#14161A]/20 rounded-md py-2.5 px-3.5 text-[#14161A] focus:outline-none focus:border-[#3B4A1F]"
                   placeholder="Kathmandu, Pokhara, etc."
                   required
                 />
@@ -157,7 +157,7 @@ export const CheckoutView: React.FC<CheckoutViewProps> = ({ onBack, onOrderCompl
                   type="text"
                   value={street}
                   onChange={(e) => setStreet(e.target.value)}
-                  className="w-full text-xs md:text-sm bg-[#FBF6E8] border border-[#3B4A1F]/20 rounded-xl py-2.5 px-3.5 text-[#14161A] focus:outline-none focus:border-[#3B4A1F]"
+                  className="w-full text-xs md:text-sm bg-[#FBF6E8] border border-[#14161A]/20 rounded-md py-2.5 px-3.5 text-[#14161A] focus:outline-none focus:border-[#3B4A1F]"
                   placeholder="House No., Street, Landmark (e.g. Near Bhatbhateni Supermarket)"
                   required
                 />
@@ -166,12 +166,12 @@ export const CheckoutView: React.FC<CheckoutViewProps> = ({ onBack, onOrderCompl
           </div>
 
           {/* Payment Method Section */}
-          <div className="bg-white rounded-3xl p-6 md:p-8 border border-[#3B4A1F]/15 shadow-sm">
-            <div className="flex items-center gap-2.5 mb-6 text-[#232D0F]">
-              <div className="w-8 h-8 rounded-full bg-[#B8F235] flex items-center justify-center font-bold text-xs text-[#232D0F]">
+          <div className="bg-white rounded-lg p-6 md:p-8 border border-[#14161A]/10 shadow-xs">
+            <div className="flex items-center gap-2.5 mb-6 text-[#14161A]">
+              <div className="w-6 h-6 rounded-sm bg-[#3B4A1F] text-[#F5EEDC] flex items-center justify-center font-bold text-xs">
                 2
               </div>
-              <h2 className="font-serif font-bold text-xl">Payment Method</h2>
+              <h2 className="font-serif font-bold text-lg">Payment Method</h2>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
@@ -179,24 +179,24 @@ export const CheckoutView: React.FC<CheckoutViewProps> = ({ onBack, onOrderCompl
               {/* eSewa */}
               <div
                 onClick={() => setPaymentMethod('esewa')}
-                className={`p-4 rounded-2xl border-2 cursor-pointer transition-all flex items-center gap-3.5 ${
+                className={`p-4 rounded-md border-2 cursor-pointer transition-colors flex items-center gap-3.5 ${
                   paymentMethod === 'esewa'
-                    ? 'border-[#60BB46] bg-[#60BB46]/10 shadow-sm'
+                    ? 'border-[#437A22] bg-[#437A22]/10 shadow-xs'
                     : 'border-gray-200 hover:border-gray-300'
                 }`}
               >
-                <div className="w-10 h-10 rounded-xl bg-[#60BB46] text-white flex items-center justify-center font-extrabold text-sm shadow-sm">
+                <div className="w-10 h-10 rounded-sm bg-[#437A22] text-white flex items-center justify-center font-bold text-sm">
                   eS
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center justify-between">
                     <span className="font-bold text-sm text-[#14161A]">eSewa Wallet</span>
                     {paymentMethod === 'esewa' && (
-                      <CheckCircle2 className="w-4 h-4 text-[#60BB46]" />
+                      <CheckCircle2 className="w-4 h-4 text-[#437A22]" />
                     )}
                   </div>
                   <p className="text-[11px] text-[#5C6678]">
-                    Nepal's first digital payment gateway
+                    Digital wallet verification
                   </p>
                 </div>
               </div>
@@ -204,24 +204,24 @@ export const CheckoutView: React.FC<CheckoutViewProps> = ({ onBack, onOrderCompl
               {/* Khalti */}
               <div
                 onClick={() => setPaymentMethod('khalti')}
-                className={`p-4 rounded-2xl border-2 cursor-pointer transition-all flex items-center gap-3.5 ${
+                className={`p-4 rounded-md border-2 cursor-pointer transition-colors flex items-center gap-3.5 ${
                   paymentMethod === 'khalti'
-                    ? 'border-[#5C2D91] bg-[#5C2D91]/10 shadow-sm'
+                    ? 'border-[#1E293B] bg-slate-100 shadow-xs'
                     : 'border-gray-200 hover:border-gray-300'
                 }`}
               >
-                <div className="w-10 h-10 rounded-xl bg-[#5C2D91] text-white flex items-center justify-center font-extrabold text-sm shadow-sm">
+                <div className="w-10 h-10 rounded-sm bg-[#1E293B] text-white flex items-center justify-center font-bold text-sm">
                   Kh
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center justify-between">
                     <span className="font-bold text-sm text-[#14161A]">Khalti Digital</span>
                     {paymentMethod === 'khalti' && (
-                      <CheckCircle2 className="w-4 h-4 text-[#5C2D91]" />
+                      <CheckCircle2 className="w-4 h-4 text-[#1E293B]" />
                     )}
                   </div>
                   <p className="text-[11px] text-[#5C6678]">
-                    Instant wallet & banking QR payment
+                    Direct QR and wallet transfer
                   </p>
                 </div>
               </div>
@@ -229,13 +229,13 @@ export const CheckoutView: React.FC<CheckoutViewProps> = ({ onBack, onOrderCompl
               {/* Cash on Delivery (COD) */}
               <div
                 onClick={() => setPaymentMethod('cod')}
-                className={`p-4 rounded-2xl border-2 cursor-pointer transition-all flex items-center gap-3.5 ${
+                className={`p-4 rounded-md border-2 cursor-pointer transition-colors flex items-center gap-3.5 ${
                   paymentMethod === 'cod'
-                    ? 'border-[#3B4A1F] bg-[#3B4A1F]/10 shadow-sm'
+                    ? 'border-[#3B4A1F] bg-[#3B4A1F]/10 shadow-xs'
                     : 'border-gray-200 hover:border-gray-300'
                 }`}
               >
-                <div className="w-10 h-10 rounded-xl bg-[#3B4A1F] text-[#B8F235] flex items-center justify-center font-extrabold text-sm shadow-sm">
+                <div className="w-10 h-10 rounded-sm bg-[#3B4A1F] text-[#F5EEDC] flex items-center justify-center font-bold text-sm">
                   COD
                 </div>
                 <div className="flex-1">
@@ -254,24 +254,24 @@ export const CheckoutView: React.FC<CheckoutViewProps> = ({ onBack, onOrderCompl
               {/* ConnectIPS */}
               <div
                 onClick={() => setPaymentMethod('connectips')}
-                className={`p-4 rounded-2xl border-2 cursor-pointer transition-all flex items-center gap-3.5 ${
+                className={`p-4 rounded-md border-2 cursor-pointer transition-colors flex items-center gap-3.5 ${
                   paymentMethod === 'connectips'
-                    ? 'border-blue-600 bg-blue-50 shadow-sm'
+                    ? 'border-[#0F172A] bg-gray-100 shadow-xs'
                     : 'border-gray-200 hover:border-gray-300'
                 }`}
               >
-                <div className="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center font-extrabold text-xs shadow-sm">
+                <div className="w-10 h-10 rounded-sm bg-[#0F172A] text-white flex items-center justify-center font-bold text-xs">
                   IPS
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center justify-between">
                     <span className="font-bold text-sm text-[#14161A]">connectIPS / Bank</span>
                     {paymentMethod === 'connectips' && (
-                      <CheckCircle2 className="w-4 h-4 text-blue-600" />
+                      <CheckCircle2 className="w-4 h-4 text-[#0F172A]" />
                     )}
                   </div>
                   <p className="text-[11px] text-[#5C6678]">
-                    Direct A/C transfer via Nepal Clearing House
+                    Direct bank account transfer via NCHL
                   </p>
                 </div>
               </div>
@@ -347,14 +347,14 @@ export const CheckoutView: React.FC<CheckoutViewProps> = ({ onBack, onOrderCompl
             <button
               onClick={handleSubmitOrder}
               disabled={isSubmitting || items.length === 0}
-              className="mt-6 w-full h-12 rounded-full bg-[#3B4A1F] hover:bg-[#232D0F] text-[#F5EEDC] font-bold text-sm shadow-lg shadow-[#3B4A1F]/20 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
+              className="mt-6 w-full h-11 rounded-md bg-[#3B4A1F] hover:bg-[#232D0F] text-[#F5EEDC] font-semibold text-sm transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
             >
               {isSubmitting ? (
                 <span>Confirming Order...</span>
               ) : (
                 <>
                   <span>Place Order</span>
-                  <span className="text-[#B8F235]">• Rs. {total.toLocaleString()}</span>
+                  <span className="text-[#B8F235]">(NPR {total.toLocaleString()})</span>
                 </>
               )}
             </button>

@@ -4,11 +4,6 @@ import { User } from '../types';
 interface AuthContextType {
   user: User | null;
   isAuthenticated: boolean;
-  isAuthModalOpen: boolean;
-  activeAuthView: 'login' | 'signup';
-  openAuthModal: (view?: 'login' | 'signup') => void;
-  closeAuthModal: () => void;
-  setAuthView: (view: 'login' | 'signup') => void;
   login: (emailOrUser: string, pass: string) => Promise<{ success: boolean; message?: string }>;
   signup: (name: string, email: string, pass: string) => Promise<{ success: boolean; message?: string }>;
   logout: () => void;
@@ -21,7 +16,6 @@ const DEFAULT_USER: User = {
   phone: '+977 9841234567',
   city: 'Kathmandu',
   address: 'Lazimpat, Kathmandu 44600',
-  rewardPoints: 340,
   orders: [
     {
       id: 'NX-NP-91823',
@@ -35,8 +29,6 @@ const DEFAULT_USER: User = {
             category: 'organic',
             categoryLabel: 'Organic & Food',
             price: 1250,
-            rating: 4.95,
-            reviewCount: 238,
             origin: 'Kanyam, Ilam',
             inStock: true,
             stockCount: 84,
@@ -71,15 +63,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     try {
       const stored = localStorage.getItem('nexus_user');
       if (stored) return JSON.parse(stored);
-      // default demo user for frictionless start if desired, or null
       return DEFAULT_USER;
     } catch {
       return null;
     }
   });
-
-  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
-  const [activeAuthView, setActiveAuthView] = useState<'login' | 'signup'>('login');
 
   useEffect(() => {
     if (user) {
@@ -89,22 +77,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   }, [user]);
 
-  const openAuthModal = (view: 'login' | 'signup' = 'login') => {
-    setActiveAuthView(view);
-    setIsAuthModalOpen(true);
-  };
-
-  const closeAuthModal = () => {
-    setIsAuthModalOpen(false);
-  };
-
-  const setAuthView = (view: 'login' | 'signup') => {
-    setActiveAuthView(view);
-  };
-
   const login = async (emailOrUser: string, _pass: string) => {
     await new Promise((r) => setTimeout(r, 600));
-    // If the input is Laxmi or matches user email, load full profile
     const loggedUser: User = {
       id: 'usr_' + Date.now(),
       name: emailOrUser.includes('@') ? emailOrUser.split('@')[0].replace('.', ' ') : emailOrUser,
@@ -112,7 +86,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       phone: '+977 9801234567',
       city: 'Kathmandu',
       address: 'Thamel, Kathmandu',
-      rewardPoints: 250,
       orders: user?.orders || []
     };
     setUser(loggedUser);
@@ -128,7 +101,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       phone: '+977 98XXXXXXXX',
       city: 'Kathmandu',
       address: 'Kathmandu Valley',
-      rewardPoints: 100, // welcome bonus points!
       orders: []
     };
     setUser(newUser);
@@ -144,11 +116,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       value={{
         user,
         isAuthenticated: !!user,
-        isAuthModalOpen,
-        activeAuthView,
-        openAuthModal,
-        closeAuthModal,
-        setAuthView,
         login,
         signup,
         logout

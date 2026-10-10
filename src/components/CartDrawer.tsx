@@ -46,13 +46,13 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ onProceedToCheckout }) =
           <div className="flex items-center gap-2">
             <ShoppingBag className="w-5 h-5 text-[#B8F235]" />
             <h2 className="font-serif font-bold text-lg">Your Cart</h2>
-            <span className="text-xs px-2 py-0.5 rounded-full bg-[#556B2F] font-bold text-[#D6FF6A]">
+            <span className="text-xs px-2 py-0.5 rounded-md bg-[#556B2F] font-bold text-[#D6FF6A]">
               {items.length} {items.length === 1 ? 'item' : 'items'}
             </span>
           </div>
           <button
             onClick={closeCart}
-            className="p-1.5 rounded-lg hover:bg-white/10 text-[#F5EEDC] transition-colors"
+            className="p-1.5 rounded-md hover:bg-white/10 text-[#F5EEDC] transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
@@ -65,17 +65,17 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ onProceedToCheckout }) =
               <Truck className="w-4 h-4 text-[#556B2F]" />
               <span>
                 {remainingForFree === 0
-                  ? '🎉 Free Express Delivery unlocked across Nepal!'
-                  : `Add Rs. ${remainingForFree.toLocaleString()} more for FREE delivery`}
+                  ? 'Free express delivery qualified across Nepal.'
+                  : `Add Rs. ${remainingForFree.toLocaleString()} more for free delivery`}
               </span>
             </div>
             <span className="font-bold text-[#556B2F]">
               {Math.round(freeShippingProgress)}%
             </span>
           </div>
-          <div className="w-full h-1.5 bg-[#3B4A1F]/10 rounded-full overflow-hidden">
+          <div className="w-full h-1.5 bg-[#3B4A1F]/10 rounded-sm overflow-hidden">
             <div
-              className="h-full bg-gradient-to-r from-[#556B2F] to-[#B8F235] transition-all duration-300"
+              className="h-full bg-[#556B2F] transition-all duration-300"
               style={{ width: `${freeShippingProgress}%` }}
             />
           </div>
@@ -85,8 +85,8 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ onProceedToCheckout }) =
         <div className="flex-1 overflow-y-auto p-4 sm:p-5 space-y-3.5">
           {items.length === 0 ? (
             <div className="h-full flex flex-col items-center justify-center text-center p-6 text-[#5C6678]">
-              <div className="w-16 h-16 rounded-full bg-[#3B4A1F]/10 flex items-center justify-center mb-4">
-                <ShoppingBag className="w-8 h-8 text-[#556B2F]" />
+              <div className="w-14 h-14 rounded-md bg-[#3B4A1F]/10 flex items-center justify-center mb-4">
+                <ShoppingBag className="w-7 h-7 text-[#556B2F]" />
               </div>
               <h3 className="font-serif font-bold text-lg text-[#232D0F]">Your cart is empty</h3>
               <p className="text-xs mt-1 max-w-[240px]">
@@ -213,7 +213,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ onProceedToCheckout }) =
                 closeCart();
                 onProceedToCheckout();
               }}
-              className="w-full h-12 rounded-full bg-[#3B4A1F] hover:bg-[#232D0F] text-[#F5EEDC] font-bold text-sm flex items-center justify-between px-6 shadow-md transition-all active:scale-[0.99]"
+              className="w-full h-11 rounded-md bg-[#3B4A1F] hover:bg-[#232D0F] text-[#F5EEDC] font-semibold text-sm flex items-center justify-between px-5 shadow-xs transition-colors active:scale-[0.99]"
             >
               <span>Proceed to Checkout</span>
               <div className="flex items-center gap-2">

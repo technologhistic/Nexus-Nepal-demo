@@ -4,7 +4,7 @@ An authentic Himalayan marketplace and modern commerce web application for Nepal
 
 ---
 
-## 🌟 Key Features
+## Key Features
 
 1. **Signature Dual-Panel Auth Experience**
    - Slanted diagonal split-card design with mountain ridge line artwork.
@@ -33,7 +33,7 @@ An authentic Himalayan marketplace and modern commerce web application for Nepal
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Development
 ```bash
@@ -48,19 +48,23 @@ npm run build
 
 ---
 
-## 📤 Push to GitHub
+## Vercel Deployment
+
+This project includes `.npmrc` and `vercel.json` preconfigured with `legacy-peer-deps=true` to ensure clean, error-free dependency resolution during deployment on Vercel.
+
+---
+
+## Push to GitHub
 
 To push this repository to your GitHub account:
 
 ```bash
-# 1. Create a new repository on GitHub (e.g. nexus-nepal)
+# 1. Link your remote repository (e.g. technologhistic/Nexus-Nepal-demo):
+git remote add origin https://github.com/technologhistic/Nexus-Nepal-demo.git
 
-# 2. Add your GitHub remote URL
-git remote add origin https://github.com/<YOUR-USERNAME>/<YOUR-REPO-NAME>.git
-
-# 3. Ensure branch is main
+# 2. Ensure branch is main:
 git branch -M main
 
-# 4. Push all code and commits to GitHub
+# 3. Push all code and commits to GitHub:
 git push -u origin main
 ```

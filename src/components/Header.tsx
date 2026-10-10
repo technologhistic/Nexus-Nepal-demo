@@ -8,8 +8,9 @@ import {
   User,
   LogOut,
   Github,
-  Compass,
-  Sparkles
+  Globe,
+  FileText,
+  Shield
 } from 'lucide-react';
 
 interface HeaderProps {
@@ -18,9 +19,10 @@ interface HeaderProps {
   selectedCategory: string;
   setSelectedCategory: (cat: string) => void;
   onOpenGitHubModal: () => void;
+  onOpenDomainModal: () => void;
   onOpenAccount: () => void;
-  activeView: 'shop' | 'account' | 'checkout' | 'auth';
-  setActiveView: (view: 'shop' | 'account' | 'checkout' | 'auth') => void;
+  activeView: 'shop' | 'account' | 'checkout' | 'auth' | 'privacy' | 'terms';
+  setActiveView: (view: 'shop' | 'account' | 'checkout' | 'auth' | 'privacy' | 'terms') => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -29,11 +31,12 @@ export const Header: React.FC<HeaderProps> = ({
   selectedCategory,
   setSelectedCategory,
   onOpenGitHubModal,
+  onOpenDomainModal,
   onOpenAccount,
   activeView,
   setActiveView
 }) => {
-  const { user, isAuthenticated, openAuthModal, logout } = useAuth();
+  const { user, isAuthenticated, logout } = useAuth();
   const { itemCount, openCart, wishlist } = useCart();
 
   const categories = [
@@ -46,24 +49,47 @@ export const Header: React.FC<HeaderProps> = ({
   ];
 
   return (
-    <header className="sticky top-0 z-40 bg-[#FBF6E8]/95 backdrop-blur-md border-b border-[#3B4A1F]/15 shadow-sm">
-      {/* Top Banner with Himalayan Notice & GitHub prompt */}
-      <div className="bg-[#3B4A1F] text-[#F5EEDC] text-xs py-1.5 px-4 flex items-center justify-between">
+    <header className="sticky top-0 z-40 bg-[#FBF6E8] border-b border-[#14161A]/10">
+      {/* Top Banner with Himalayan logistics and Custom Domain verification */}
+      <div className="bg-[#232D0F] text-[#F5EEDC] text-xs py-2 px-4 flex items-center justify-between border-b border-[#3B4A1F]">
         <div className="flex items-center gap-2 mx-auto sm:mx-0">
-          <span className="inline-block w-2 h-2 rounded-full bg-[#B8F235] animate-ping" />
-          <span className="font-medium text-[11px] sm:text-xs">
-            Free Express Delivery across Nepal on orders over Rs. 4,000 | Authentic GI Certified Crafts
+          <span className="inline-block w-1.5 h-1.5 rounded-xs bg-[#B8F235]" />
+          <span className="font-normal text-[11px] sm:text-xs text-[#F5EEDC]/90">
+            Express delivery across all 7 provinces in Nepal. Guaranteed authentic regional origin.
           </span>
         </div>
-        <div className="hidden sm:flex items-center gap-4 text-[11px]">
+        
+        <div className="hidden sm:flex items-center gap-3 text-[11px]">
+          <button
+            onClick={onOpenDomainModal}
+            className="flex items-center gap-1.5 px-2.5 py-1 rounded-xs bg-[#3B4A1F] hover:bg-[#556B2F] text-[#F5EEDC] transition-colors font-medium cursor-pointer"
+          >
+            <Globe className="w-3.5 h-3.5 text-[#B8F235]" />
+            <span>Custom Domain</span>
+          </button>
+          
+          <button
+            onClick={() => setActiveView('privacy')}
+            className="hover:text-white transition-colors cursor-pointer"
+          >
+            Privacy
+          </button>
+          <button
+            onClick={() => setActiveView('terms')}
+            className="hover:text-white transition-colors cursor-pointer"
+          >
+            Terms
+          </button>
+
           <button
             onClick={onOpenGitHubModal}
-            className="flex items-center gap-1.5 px-2.5 py-0.5 rounded bg-[#556B2F] hover:bg-[#B8F235] hover:text-[#232D0F] transition-all font-semibold"
+            className="flex items-center gap-1 px-2 py-1 rounded-xs bg-[#14161A] hover:bg-black text-[#F5EEDC] transition-colors font-medium cursor-pointer"
           >
             <Github className="w-3.5 h-3.5" />
-            <span>Push to GitHub</span>
+            <span>GitHub</span>
           </button>
-          <span className="text-[#B8F235] font-mono">NPR (Rs.)</span>
+
+          <span className="text-[#B8F235] font-mono tabular-nums">NPR (Rs.)</span>
         </div>
       </div>
 
@@ -76,19 +102,19 @@ export const Header: React.FC<HeaderProps> = ({
             onClick={() => setActiveView('shop')}
             className="flex items-center gap-3 cursor-pointer group"
           >
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#3B4A1F] to-[#232D0F] flex items-center justify-center text-[#B8F235] font-serif font-black text-2xl shadow-md group-hover:scale-105 transition-transform">
+            <div className="w-9 h-9 rounded-md bg-[#232D0F] flex items-center justify-center text-[#B8F235] font-serif font-black text-xl shadow-xs">
               N
             </div>
             <div>
               <div className="flex items-center gap-1.5">
-                <span className="font-serif font-extrabold text-xl sm:text-2xl tracking-tight text-[#232D0F]">
+                <span className="font-serif font-bold text-xl sm:text-2xl tracking-tight text-[#14161A]">
                   NEXUS
                 </span>
-                <span className="font-serif font-light text-xl sm:text-2xl tracking-wider text-[#556B2F]">
+                <span className="font-serif font-normal text-xl sm:text-2xl tracking-wide text-[#556B2F]">
                   NEPAL
                 </span>
               </div>
-              <p className="text-[10px] tracking-[0.2em] uppercase text-[#3B4A1F]/70 font-semibold -mt-1 hidden sm:block">
+              <p className="text-[10px] tracking-[0.18em] uppercase text-[#5C6678] font-medium -mt-1 hidden sm:block">
                 Himalayan Marketplace
               </p>
             </div>
@@ -101,14 +127,14 @@ export const Header: React.FC<HeaderProps> = ({
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search Pashmina, Ilam Tea, Singing Bowls, Trekking Gear..."
-                className="w-full bg-white/90 border border-[#3B4A1F]/20 rounded-full py-2 pl-10 pr-4 text-sm text-[#14161A] placeholder:text-[#5C6678]/70 focus:outline-none focus:border-[#3B4A1F] focus:ring-2 focus:ring-[#B8F235]/40 transition-all shadow-inner"
+                placeholder="Search by product name, materials, or district..."
+                className="w-full bg-white border border-[#14161A]/15 rounded-md py-2 pl-9 pr-4 text-xs text-[#14161A] placeholder:text-[#5C6678] focus:outline-none focus:border-[#3B4A1F] transition-colors"
               />
-              <Search className="absolute left-3.5 top-2.5 w-4 h-4 text-[#5C6678]" />
+              <Search className="absolute left-3 top-2.5 w-3.5 h-3.5 text-[#5C6678]" />
               {searchQuery && (
                 <button
                   onClick={() => setSearchQuery('')}
-                  className="absolute right-3 top-2.5 text-xs text-[#5C6678] hover:text-black font-semibold"
+                  className="absolute right-3 top-2.5 text-xs text-[#5C6678] hover:text-black font-medium"
                 >
                   Clear
                 </button>
@@ -117,26 +143,26 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
 
           {/* Actions & Profile */}
-          <div className="flex items-center gap-2 sm:gap-4">
+          <div className="flex items-center gap-2 sm:gap-3">
             
-            {/* GitHub Quick Button (Mobile) */}
+            {/* Custom Domain Quick Mobile Access */}
             <button
-              onClick={onOpenGitHubModal}
-              className="sm:hidden p-2 rounded-xl bg-[#3B4A1F]/10 text-[#232D0F] hover:bg-[#3B4A1F]/20"
-              title="Push to GitHub"
+              onClick={onOpenDomainModal}
+              className="sm:hidden p-2 rounded-md border border-[#14161A]/10 text-[#14161A] hover:bg-white"
+              title="Custom Domain"
             >
-              <Github className="w-5 h-5" />
+              <Globe className="w-4 h-4" />
             </button>
 
             {/* Wishlist */}
             <button
               onClick={() => setActiveView('shop')}
-              className="relative p-2 rounded-xl hover:bg-[#3B4A1F]/10 text-[#232D0F] transition-colors"
-              title="Wishlist"
+              className="relative p-2 rounded-md hover:bg-white text-[#14161A] border border-transparent hover:border-[#14161A]/10 transition-colors"
+              title="Saved items"
             >
-              <Heart className="w-5 h-5" />
+              <Heart className="w-4 h-4" />
               {wishlist.length > 0 && (
-                <span className="absolute top-1 right-1 w-4 h-4 rounded-full bg-[#B3341F] text-white text-[10px] font-bold flex items-center justify-center">
+                <span className="absolute top-1 right-1 w-3.5 h-3.5 rounded-xs bg-[#B3341F] text-white text-[9px] font-bold flex items-center justify-center tabular-nums">
                   {wishlist.length}
                 </span>
               )}
@@ -145,46 +171,41 @@ export const Header: React.FC<HeaderProps> = ({
             {/* Shopping Cart Button */}
             <button
               onClick={openCart}
-              className="flex items-center gap-2 px-3 py-2 rounded-xl bg-[#3B4A1F] text-[#F5EEDC] hover:bg-[#232D0F] transition-all shadow-sm group"
+              className="flex items-center gap-2 px-3 py-2 rounded-md bg-[#3B4A1F] text-[#F5EEDC] hover:bg-[#232D0F] transition-colors"
             >
               <div className="relative">
-                <ShoppingBag className="w-5 h-5 text-[#B8F235] group-hover:scale-110 transition-transform" />
+                <ShoppingBag className="w-4 h-4 text-[#B8F235]" />
                 {itemCount > 0 && (
-                  <span className="absolute -top-1.5 -right-2 w-4 h-4 rounded-full bg-[#D6FF6A] text-[#232D0F] text-[10px] font-extrabold flex items-center justify-center shadow-sm">
+                  <span className="absolute -top-1.5 -right-2 w-3.5 h-3.5 rounded-xs bg-[#B8F235] text-[#232D0F] text-[9px] font-bold flex items-center justify-center tabular-nums">
                     {itemCount}
                   </span>
                 )}
               </div>
-              <span className="hidden sm:inline text-xs font-semibold">Cart</span>
+              <span className="hidden sm:inline text-xs font-medium">Cart</span>
             </button>
 
             {/* User Account / Login Button */}
             {isAuthenticated && user ? (
-              <div className="flex items-center gap-1.5 pl-2 border-l border-[#3B4A1F]/20">
+              <div className="flex items-center gap-1.5 pl-2 border-l border-[#14161A]/10">
                 <button
                   onClick={onOpenAccount}
-                  className={`flex items-center gap-2 px-2.5 py-1.5 rounded-xl transition-all ${
+                  className={`flex items-center gap-2 px-2.5 py-1.5 rounded-md transition-colors ${
                     activeView === 'account'
                       ? 'bg-[#3B4A1F] text-[#F5EEDC]'
-                      : 'hover:bg-[#3B4A1F]/10 text-[#232D0F]'
+                      : 'hover:bg-white text-[#14161A]'
                   }`}
                 >
-                  <div className="w-7 h-7 rounded-full bg-[#B8F235] text-[#232D0F] font-bold text-xs flex items-center justify-center shadow-sm">
+                  <div className="w-6 h-6 rounded-xs bg-[#3B4A1F] text-[#B8F235] font-bold text-xs flex items-center justify-center">
                     {user.name.charAt(0).toUpperCase()}
                   </div>
-                  <div className="text-left hidden lg:block">
-                    <span className="block text-xs font-bold leading-tight truncate max-w-[100px]">
-                      {user.name}
-                    </span>
-                    <span className="block text-[10px] text-[#556B2F]">
-                      {user.rewardPoints} pts
-                    </span>
-                  </div>
+                  <span className="text-xs font-medium truncate max-w-[100px] hidden lg:block">
+                    {user.name}
+                  </span>
                 </button>
                 <button
                   onClick={logout}
                   title="Sign out"
-                  className="p-1.5 rounded-lg text-[#5C6678] hover:text-[#B3341F] hover:bg-[#B3341F]/10 transition-colors"
+                  className="p-1.5 rounded-md text-[#5C6678] hover:text-[#B3341F] hover:bg-white transition-colors"
                 >
                   <LogOut className="w-4 h-4" />
                 </button>
@@ -192,10 +213,10 @@ export const Header: React.FC<HeaderProps> = ({
             ) : (
               <button
                 onClick={() => setActiveView('auth')}
-                className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-gradient-to-r from-[#B8F235] to-[#D6FF6A] text-[#232D0F] font-bold text-xs shadow-sm hover:brightness-105 active:scale-95 transition-all cursor-pointer"
+                className="flex items-center gap-1.5 px-3 py-2 rounded-md bg-[#3B4A1F] hover:bg-[#232D0F] text-[#F5EEDC] text-xs font-semibold transition-colors cursor-pointer"
               >
-                <User className="w-4 h-4" />
-                <span>Sign In / Join</span>
+                <User className="w-3.5 h-3.5" />
+                <span>Account</span>
               </button>
             )}
 
@@ -210,14 +231,14 @@ export const Header: React.FC<HeaderProps> = ({
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search products across Nepal..."
-              className="w-full bg-white/90 border border-[#3B4A1F]/20 rounded-full py-2 pl-10 pr-4 text-xs text-[#14161A]"
+              className="w-full bg-white border border-[#14161A]/15 rounded-md py-2 pl-9 pr-3 text-xs text-[#14161A]"
             />
-            <Search className="absolute left-3.5 top-2.5 w-4 h-4 text-[#5C6678]" />
+            <Search className="absolute left-3 top-2.5 w-3.5 h-3.5 text-[#5C6678]" />
           </div>
         </div>
 
-        {/* Category Navigation Pills */}
-        <div className="flex items-center gap-2 overflow-x-auto pt-3 pb-1 scrollbar-none no-scrollbar">
+        {/* Category Navigation (Zero Pill Discipline - Clean Segmented Tabs) */}
+        <nav className="flex items-center gap-1 overflow-x-auto pt-3 pb-1 border-t border-[#14161A]/5 mt-2">
           {categories.map((cat) => (
             <button
               key={cat.id}
@@ -225,16 +246,16 @@ export const Header: React.FC<HeaderProps> = ({
                 setSelectedCategory(cat.id);
                 if (activeView !== 'shop') setActiveView('shop');
               }}
-              className={`px-3.5 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-all ${
+              className={`px-3 py-1.5 text-xs font-medium whitespace-nowrap rounded-md transition-colors ${
                 selectedCategory === cat.id && activeView === 'shop'
-                  ? 'bg-[#3B4A1F] text-[#F5EEDC] shadow-sm font-semibold'
-                  : 'bg-white/60 text-[#3B4A1F] hover:bg-white hover:text-black border border-[#3B4A1F]/10'
+                  ? 'bg-[#3B4A1F] text-[#F5EEDC] font-semibold'
+                  : 'text-[#14161A] hover:bg-white/80'
               }`}
             >
               {cat.label}
             </button>
           ))}
-        </div>
+        </nav>
       </div>
     </header>
   );
