@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { DEFAULT_SUPABASE_URL, SUPABASE_CALLBACK_URL } from '../lib/supabase';
 import {
   X,
   Shield,
@@ -379,27 +378,6 @@ export const SignInModal: React.FC<SignInModalProps> = ({
                     Buyer Access
                   </span>
                 </button>
-
-                {/* Supabase Google Auth Connection Details */}
-                <div className="mt-2.5 px-3 py-2 rounded-xl bg-[#232D0F]/5 border border-[#232D0F]/10 text-[11px] text-[#232D0F]">
-                  <div className="flex items-center justify-between mb-1">
-                    <div className="flex items-center gap-1.5 font-semibold text-[#232D0F]">
-                      <span className="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                      <span>Supabase Auth Connected</span>
-                    </div>
-                    <span className="text-[10px] bg-emerald-100 text-emerald-800 font-medium px-2 py-0.5 rounded-full">
-                      Google OAuth Ready
-                    </span>
-                  </div>
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 text-[10px] text-[#5C6678]">
-                    <span className="truncate">
-                      Callback URL:{' '}
-                      <code className="font-mono text-[#232D0F] bg-black/5 px-1 rounded select-all">
-                        {SUPABASE_CALLBACK_URL}
-                      </code>
-                    </span>
-                  </div>
-                </div>
               </div>
 
               {/* Divider */}
