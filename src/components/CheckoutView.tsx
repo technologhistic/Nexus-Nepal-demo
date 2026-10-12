@@ -11,7 +11,7 @@ interface CheckoutViewProps {
 
 export const CheckoutView: React.FC<CheckoutViewProps> = ({ onBack, onOrderComplete }) => {
   const { items, subtotal, shippingFee, discountAmount, total, placeOrder } = useCart();
-  const { user } = useAuth();
+  const { user, canBuy, openAuthModal } = useAuth();
 
   const [fullName, setFullName] = useState(user?.name || '');
   const [phone, setPhone] = useState(user?.phone || '');
@@ -36,6 +36,12 @@ export const CheckoutView: React.FC<CheckoutViewProps> = ({ onBack, onOrderCompl
   const handleSubmitOrder = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMessage('');
+
+    if (!canBuy) {
+      openAuthModal('Visitor mode active. Sign in with Google ID or Email as a Buyer to place this order.');
+      setErrorMessage('Visitor mode: Please sign in as a buyer to complete order placement.');
+      return;
+    }
 
     if (!fullName.trim() || !phone.trim() || !street.trim()) {
       setErrorMessage('Please fill in your recipient name, phone, and delivery address.');
@@ -80,6 +86,22 @@ export const CheckoutView: React.FC<CheckoutViewProps> = ({ onBack, onOrderCompl
         {/* Left Form: Delivery & Payment Details */}
         <div className="flex-1 space-y-6">
           
+          {!canBuy && (
+            <div className="p-4 rounded-lg bg-amber-50 border border-amber-300 flex flex-wrap items-center justify-between gap-3 text-xs text-amber-900 animate-in fade-in">
+              <div>
+                <strong className="block text-sm font-serif">Visitor Mode Notice</strong>
+                <span>You are currently exploring as a visitor. Sign in with Google or Email as a buyer to order.</span>
+              </div>
+              <button
+                type="button"
+                onClick={() => openAuthModal('Sign in with Google or Email as a Buyer to place this order.')}
+                className="px-3.5 py-1.5 rounded-md bg-[#3B4A1F] text-[#F5EEDC] font-semibold text-xs hover:bg-[#232D0F] shrink-0 transition-colors cursor-pointer"
+              >
+                Sign In as Buyer
+              </button>
+            </div>
+          )}
+
           {/* Shipping Address Section */}
           <div className="bg-white rounded-lg p-6 md:p-8 border border-[#14161A]/10 shadow-xs">
             <div className="flex items-center gap-2.5 mb-6 text-[#14161A]">

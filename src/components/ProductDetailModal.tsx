@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Product } from '../types';
 import { useCart } from '../context/CartContext';
+import { useAuth } from '../context/AuthContext';
 import { X, MapPin, Check, Plus, Minus, ShieldCheck, Truck, RotateCcw } from 'lucide-react';
 
 interface ProductDetailModalProps {
@@ -10,11 +11,20 @@ interface ProductDetailModalProps {
 
 export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product, onClose }) => {
   const { addToCart } = useCart();
+  const { canBuy, openAuthModal, setPendingItemToBuy } = useAuth();
   const [quantity, setQuantity] = useState(1);
 
   if (!product) return null;
 
   const handleAdd = () => {
+    if (!canBuy) {
+      if (setPendingItemToBuy) {
+        setPendingItemToBuy({ product, quantity });
+      }
+      onClose();
+      openAuthModal(`You are viewing as a visitor. Sign in as a Buyer with Google or Email to order "${product.name}".`);
+      return;
+    }
     addToCart(product, quantity);
     onClose();
   };
@@ -151,9 +161,9 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product,
 
             <button
               onClick={handleAdd}
-              className="flex-1 h-10 rounded-md bg-[#3B4A1F] hover:bg-[#232D0F] text-[#F5EEDC] text-xs md:text-sm font-semibold flex items-center justify-center gap-2 transition-colors active:scale-[0.99]"
+              className="flex-1 h-10 rounded-md bg-[#3B4A1F] hover:bg-[#232D0F] text-[#F5EEDC] text-xs md:text-sm font-semibold flex items-center justify-center gap-2 transition-colors active:scale-[0.99] cursor-pointer"
             >
-              <span>Add to Cart</span>
+              <span>{!canBuy ? 'Order Now (Sign In as Buyer)' : 'Add to Cart'}</span>
               <span className="text-[#B8F235]">
                 (NPR {(product.price * quantity).toLocaleString()})
               </span>

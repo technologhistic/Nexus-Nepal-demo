@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { CartProvider, useCart } from './context/CartContext';
 import { PRODUCTS } from './data/products';
-import { Product, Order } from './types';
+import { Product, Order, StoreSettings } from './types';
 import { Header } from './components/Header';
 import { ProductCard } from './components/ProductCard';
 import { ProductDetailModal } from './components/ProductDetailModal';
@@ -10,6 +10,8 @@ import { CartDrawer } from './components/CartDrawer';
 import { CheckoutView } from './components/CheckoutView';
 import { AccountView } from './components/AccountView';
 import { NexusAuthPage } from './components/NexusAuthPage';
+import { AdminPanel } from './components/AdminPanel';
+import { SignInModal } from './components/SignInModal';
 import { PrivacyPolicyView } from './components/PrivacyPolicyView';
 import { TermsView } from './components/TermsView';
 import {
@@ -21,19 +23,85 @@ import {
   Filter
 } from 'lucide-react';
 
+const DEFAULT_SETTINGS: StoreSettings = {
+  storeName: 'Nexus Nepal',
+  bannerText: 'Authentic Nepali Artisanship & Mountain Gear • Direct Cooperative Sourcing',
+  showBanner: true,
+  standardShipping: 150,
+  taxPercentage: 13,
+  promoCode: 'NEPAL10',
+  promoDiscount: 10,
+  allowVisitorCheckout: false,
+  supportEmail: 'support@nexusnepal.com',
+  supportPhone: '+977 1 4410000'
+};
+
 const MainShop: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [sortBy, setSortBy] = useState<'featured' | 'price-asc' | 'price-desc' | 'name-asc'>('featured');
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-  const [activeView, setActiveView] = useState<'shop' | 'account' | 'checkout' | 'auth' | 'privacy' | 'terms'>('shop');
-  const [completedOrder, setCompletedOrder] = useState<Order | null>(null);
+  const [activeView, setActiveView] = useState<'shop' | 'account' | 'checkout' | 'auth' | 'privacy' | 'terms' | 'admin'>('shop');
+  const [_completedOrder, setCompletedOrder] = useState<Order | null>(null);
 
+  const { isAuthModalOpen, closeAuthModal, authModalReason, openAuthModal, isAdmin, isVisitor, canBuy } = useAuth();
   const { openCart } = useCart();
+
+  // Products catalog state (persisted to localStorage)
+  const [productsList, setProductsList] = useState<Product[]>(() => {
+    try {
+      const stored = localStorage.getItem('nexus_products');
+      if (stored) return JSON.parse(stored);
+    } catch {}
+    return PRODUCTS;
+  });
+
+  // Store settings state (persisted to localStorage)
+  const [storeSettings, setStoreSettings] = useState<StoreSettings>(() => {
+    try {
+      const stored = localStorage.getItem('nexus_settings');
+      if (stored) return JSON.parse(stored);
+    } catch {}
+    return DEFAULT_SETTINGS;
+  });
+
+  const handleUpdateProduct = (updated: Product) => {
+    setProductsList((prev) => {
+      const next = prev.map((p) => (p.id === updated.id ? updated : p));
+      localStorage.setItem('nexus_products', JSON.stringify(next));
+      return next;
+    });
+  };
+
+  const handleAddProduct = (newProd: Product) => {
+    setProductsList((prev) => {
+      const next = [newProd, ...prev];
+      localStorage.setItem('nexus_products', JSON.stringify(next));
+      return next;
+    });
+  };
+
+  const handleDeleteProduct = (id: string) => {
+    setProductsList((prev) => {
+      const next = prev.filter((p) => p.id !== id);
+      localStorage.setItem('nexus_products', JSON.stringify(next));
+      return next;
+    });
+  };
+
+  const handleResetCatalog = () => {
+    setProductsList(PRODUCTS);
+    localStorage.removeItem('nexus_products');
+  };
+
+  const handleUpdateSettings = (newSettings: StoreSettings) => {
+    setStoreSettings(newSettings);
+    localStorage.setItem('nexus_settings', JSON.stringify(newSettings));
+  };
 
   // Filter & Sort Products
   const filteredProducts = useMemo(() => {
-    let list = [...PRODUCTS];
+    let list = [...productsList];
 
     if (selectedCategory !== 'all') {
       list = list.filter((p) => p.category === selectedCategory);
@@ -59,7 +127,7 @@ const MainShop: React.FC = () => {
     }
 
     return list;
-  }, [selectedCategory, searchQuery, sortBy]);
+  }, [productsList, selectedCategory, searchQuery, sortBy]);
 
   return (
     <div className="min-h-screen bg-[#FBF6E8] text-[#14161A] font-sans flex flex-col">
@@ -70,13 +138,43 @@ const MainShop: React.FC = () => {
         selectedCategory={selectedCategory}
         setSelectedCategory={setSelectedCategory}
         onOpenAccount={() => setActiveView('account')}
+        onOpenSignIn={() => openAuthModal()}
         activeView={activeView}
         setActiveView={setActiveView}
       />
 
+      {/* Visitor Mode Information Bar */}
+      {isVisitor && activeView === 'shop' && (
+        <div className="bg-[#232D0F] text-[#F5EEDC] px-4 py-2 text-xs flex flex-wrap items-center justify-between border-b border-[#3B4A1F] gap-2 shadow-inner">
+          <div className="flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-[#B8F235] shrink-0" />
+            <span className="text-[11px] sm:text-xs">
+              <strong className="text-white">Viewing as Visitor (Browse Only):</strong> You can explore all authentic products across Nepal. Sign in as a Buyer to order.
+            </span>
+          </div>
+          <button
+            onClick={() => openAuthModal('Sign in with Google or Email as a Buyer to order products.')}
+            className="px-3 py-1 rounded bg-[#B8F235] hover:bg-[#a6de26] text-[#232D0F] font-bold text-xs transition-colors cursor-pointer shadow-xs ml-auto sm:ml-0"
+          >
+            Sign In as Buyer to Order
+          </button>
+        </div>
+      )}
+
       {/* Main Content Area based on active view */}
       <main className="flex-1">
-        {activeView === 'auth' ? (
+        {activeView === 'admin' && isAdmin ? (
+          <AdminPanel
+            products={productsList}
+            onUpdateProduct={handleUpdateProduct}
+            onAddProduct={handleAddProduct}
+            onDeleteProduct={handleDeleteProduct}
+            onResetCatalog={handleResetCatalog}
+            storeSettings={storeSettings}
+            onUpdateSettings={handleUpdateSettings}
+            onBackToShop={() => setActiveView('shop')}
+          />
+        ) : activeView === 'auth' ? (
           <NexusAuthPage onBackToShop={() => setActiveView('shop')} />
         ) : activeView === 'checkout' ? (
           <CheckoutView
@@ -107,7 +205,7 @@ const MainShop: React.FC = () => {
                   </p>
 
                   <h1 className="text-3xl sm:text-5xl font-serif font-bold tracking-tight leading-tight text-white">
-                    Himalayan Craftsmanship and Regional Specialty Goods.
+                    Nepal Craftsmanship and Regional Specialty Goods.
                   </h1>
 
                   <p className="mt-4 text-sm sm:text-base text-[#F5EEDC]/85 leading-relaxed max-w-xl">
@@ -127,7 +225,7 @@ const MainShop: React.FC = () => {
                     </button>
 
                     <button
-                      onClick={() => setActiveView('auth')}
+                      onClick={() => openAuthModal('Sign in to access your buyer account.')}
                       className="px-5 py-2.5 rounded-md bg-white/10 hover:bg-white/20 border border-white/20 text-[#F5EEDC] font-medium text-xs sm:text-sm transition-colors cursor-pointer"
                     >
                       Account Access
@@ -154,7 +252,7 @@ const MainShop: React.FC = () => {
                       <span className="font-mono tabular-nums">NPR 8,500</span>
                     </div>
                     <h3 className="font-serif font-bold text-base text-white">
-                      Pure Himalayan Pashmina Shawl
+                      Pure Nepal Pashmina Shawl
                     </h3>
                     <p className="text-xs text-[#F5EEDC]/75 line-clamp-2">
                       Hand-spun by local cooperatives using natural unbleached Changthangi cashmere fiber.
@@ -163,7 +261,7 @@ const MainShop: React.FC = () => {
 
                   <button
                     onClick={() => {
-                      const prod = PRODUCTS.find((p) => p.id === 'nx-pashmina-01');
+                      const prod = productsList.find((p) => p.id === 'nx-pashmina-01') || productsList[0];
                       if (prod) setSelectedProduct(prod);
                     }}
                     className="mt-4 w-full py-2 rounded-md bg-white/10 hover:bg-white/20 text-white text-xs font-semibold transition-colors cursor-pointer"
@@ -202,7 +300,7 @@ const MainShop: React.FC = () => {
                   <h2 className="font-serif font-bold text-xl sm:text-2xl text-[#14161A]">
                     {selectedCategory === 'all'
                       ? 'Catalog Overview'
-                      : PRODUCTS.find((p) => p.category === selectedCategory)?.categoryLabel || 'Catalog'}
+                      : productsList.find((p) => p.category === selectedCategory)?.categoryLabel || 'Catalog'}
                   </h2>
                   <p className="text-xs text-[#5C6678] mt-0.5">
                     Showing {filteredProducts.length} verified products with domestic fulfillment
@@ -239,7 +337,7 @@ const MainShop: React.FC = () => {
                       setSearchQuery('');
                       setSelectedCategory('all');
                     }}
-                    className="px-4 py-2 bg-[#3B4A1F] text-[#F5EEDC] rounded-md text-xs font-semibold"
+                    className="px-4 py-2 bg-[#3B4A1F] text-[#F5EEDC] rounded-md text-xs font-semibold cursor-pointer"
                   >
                     Reset Filters
                   </button>
@@ -355,6 +453,14 @@ const MainShop: React.FC = () => {
         onProceedToCheckout={() => {
           setActiveView('checkout');
         }}
+      />
+
+      {/* Sign In & Buyer Verification Popup Modal */}
+      <SignInModal
+        isOpen={isAuthModalOpen}
+        onClose={closeAuthModal}
+        reason={authModalReason}
+        onAdminLogin={() => setActiveView('admin')}
       />
     </div>
   );

@@ -7,7 +7,9 @@ import {
   User,
   LogOut,
   ShieldCheck,
-  CheckCircle2
+  CheckCircle2,
+  Eye,
+  Sparkles
 } from 'lucide-react';
 
 interface HeaderProps {
@@ -31,7 +33,7 @@ export const Header: React.FC<HeaderProps> = ({
   activeView,
   setActiveView
 }) => {
-  const { user, isAuthenticated, isAdmin, logout } = useAuth();
+  const { user, isAuthenticated, isAdmin, isVisitor, canBuy, logout } = useAuth();
   const { itemCount, openCart } = useCart();
 
   const categories = [
@@ -176,15 +178,23 @@ export const Header: React.FC<HeaderProps> = ({
                       : 'hover:bg-white text-[#14161A]'
                   }`}
                 >
-                  <div className="w-6 h-6 rounded-xs bg-[#3B4A1F] text-[#B8F235] font-bold text-xs flex items-center justify-center">
-                    {user.name.charAt(0).toUpperCase()}
-                  </div>
+                  {user.avatarUrl ? (
+                    <img
+                      src={user.avatarUrl}
+                      alt={user.name}
+                      className="w-6 h-6 rounded-full object-cover border border-[#B8F235] shrink-0"
+                    />
+                  ) : (
+                    <div className="w-6 h-6 rounded-xs bg-[#3B4A1F] text-[#B8F235] font-bold text-xs flex items-center justify-center shrink-0">
+                      {user.name.charAt(0).toUpperCase()}
+                    </div>
+                  )}
                   <div className="text-left hidden lg:block">
                     <span className="text-xs font-medium truncate max-w-[100px] block leading-tight">
                       {user.name}
                     </span>
                     <span className="text-[9px] text-[#556B2F] font-bold block uppercase leading-none">
-                      {user.role === 'admin' ? 'Administrator' : 'Verified Buyer'}
+                      {user.role === 'admin' ? 'Administrator' : user.authProvider === 'google' ? 'Google Buyer' : 'Verified Buyer'}
                     </span>
                   </div>
                 </button>
@@ -197,13 +207,21 @@ export const Header: React.FC<HeaderProps> = ({
                 </button>
               </div>
             ) : (
-              <button
-                onClick={onOpenSignIn}
-                className="flex items-center gap-1.5 px-3 py-2 rounded-md bg-[#3B4A1F] hover:bg-[#232D0F] text-[#F5EEDC] text-xs font-semibold transition-colors cursor-pointer"
-              >
-                <User className="w-3.5 h-3.5 text-[#B8F235]" />
-                <span>Sign In</span>
-              </button>
+              <div className="flex items-center gap-2 pl-2 border-l border-[#14161A]/10">
+                {isVisitor && (
+                  <span className="hidden sm:inline-flex items-center gap-1 px-2 py-1 rounded bg-[#14161A]/5 text-[#5C6678] text-[11px] font-medium">
+                    <Eye className="w-3 h-3 text-[#556B2F]" />
+                    Visitor Mode
+                  </span>
+                )}
+                <button
+                  onClick={onOpenSignIn}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-[#3B4A1F] hover:bg-[#232D0F] text-[#F5EEDC] text-xs font-semibold transition-colors cursor-pointer shadow-xs active:scale-[0.98]"
+                >
+                  <User className="w-3.5 h-3.5 text-[#B8F235]" />
+                  <span>{isVisitor ? 'Sign In as Buyer' : 'Sign In'}</span>
+                </button>
+              </div>
             )}
 
           </div>

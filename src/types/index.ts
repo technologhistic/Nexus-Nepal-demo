@@ -26,11 +26,12 @@ export interface User {
   id: string;
   name: string;
   email: string;
+  avatarUrl?: string;
   phone?: string;
   city?: string;
   address?: string;
   role?: 'admin' | 'buyer' | 'visitor';
-  authProvider?: 'google' | 'password';
+  authProvider?: 'google' | 'password' | 'email' | 'supabase';
   canBuy?: boolean;
   orders: Order[];
 }

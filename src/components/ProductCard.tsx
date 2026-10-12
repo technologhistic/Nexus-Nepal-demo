@@ -1,6 +1,7 @@
 import React from 'react';
 import { Product } from '../types';
 import { useCart } from '../context/CartContext';
+import { useAuth } from '../context/AuthContext';
 import { MapPin, Plus } from 'lucide-react';
 
 interface ProductCardProps {
@@ -10,6 +11,7 @@ interface ProductCardProps {
 
 export const ProductCard: React.FC<ProductCardProps> = ({ product, onSelect }) => {
   const { addToCart } = useCart();
+  const { canBuy, isVisitor, openAuthModal, setPendingItemToBuy } = useAuth();
 
   const discountPercent = product.originalPrice
     ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
@@ -85,11 +87,21 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onSelect }) =
           </div>
 
           <button
-            onClick={() => addToCart(product, 1)}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-[#3B4A1F] hover:bg-[#232D0F] text-[#F5EEDC] text-xs font-medium transition-colors"
+            onClick={() => {
+              if (!canBuy) {
+                if (setPendingItemToBuy) {
+                  setPendingItemToBuy({ product, quantity: 1 });
+                }
+                openAuthModal(`You are viewing as a visitor. Sign in with Google or Email as a buyer to order "${product.name}".`);
+              } else {
+                addToCart(product, 1);
+              }
+            }}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-[#3B4A1F] hover:bg-[#232D0F] text-[#F5EEDC] text-xs font-medium transition-colors cursor-pointer"
+            title={!canBuy ? "Sign in as buyer to order this product" : "Add to cart"}
           >
             <Plus className="w-3.5 h-3.5" />
-            <span>Add to Cart</span>
+            <span>{!canBuy ? 'Order / Add' : 'Add to Cart'}</span>
           </button>
         </div>
       </div>

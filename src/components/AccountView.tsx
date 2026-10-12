@@ -35,12 +35,36 @@ export const AccountView: React.FC<AccountViewProps> = ({ onBackToShop, onNaviga
       <div className="bg-[#232D0F] rounded-lg p-6 sm:p-8 text-[#F5EEDC] mb-8 border border-[#3B4A1F]">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
           <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-md bg-[#3B4A1F] text-[#B8F235] font-serif font-bold text-xl flex items-center justify-center border border-[#556B2F]">
-              {user.name.charAt(0).toUpperCase()}
-            </div>
+            {user.avatarUrl ? (
+              <img
+                src={user.avatarUrl}
+                alt={user.name}
+                className="w-14 h-14 rounded-full object-cover border-2 border-[#B8F235] shadow-sm"
+              />
+            ) : (
+              <div className="w-14 h-14 rounded-md bg-[#3B4A1F] text-[#B8F235] font-serif font-bold text-2xl flex items-center justify-center border border-[#556B2F]">
+                {user.name.charAt(0).toUpperCase()}
+              </div>
+            )}
             <div>
-              <h1 className="text-xl sm:text-2xl font-serif font-bold">{user.name}</h1>
+              <div className="flex items-center gap-2">
+                <h1 className="text-xl sm:text-2xl font-serif font-bold">{user.name}</h1>
+                <span className="text-[10px] bg-[#B8F235] text-[#232D0F] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">
+                  {user.role === 'admin' ? 'Administrator' : 'Buyer Verified'}
+                </span>
+              </div>
               <p className="text-xs text-[#F5EEDC]/80 mt-0.5">{user.email}</p>
+              <div className="flex items-center gap-3 mt-1.5 text-[11px] text-[#F5EEDC]/70">
+                <span className="flex items-center gap-1">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-[#B8F235]" />
+                  <span>Buying permissions active</span>
+                </span>
+                {user.authProvider && (
+                  <span className="px-1.5 py-0.5 rounded bg-white/10 text-[10px] text-white">
+                    {user.authProvider === 'google' ? 'Google OAuth' : 'Email & Password'}
+                  </span>
+                )}
+              </div>
               {user.address && (
                 <p className="text-[11px] text-[#F5EEDC]/60 flex items-center gap-1 mt-1">
                   <MapPin className="w-3 h-3 text-[#B8F235]" />

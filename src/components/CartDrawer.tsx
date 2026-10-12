@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useCart } from '../context/CartContext';
+import { useAuth } from '../context/AuthContext';
 import { X, Trash2, Plus, Minus, ArrowRight, Tag, Truck, ShoppingBag } from 'lucide-react';
 
 interface CartDrawerProps {
@@ -7,6 +8,7 @@ interface CartDrawerProps {
 }
 
 export const CartDrawer: React.FC<CartDrawerProps> = ({ onProceedToCheckout }) => {
+  const { isAuthenticated, canBuy, openAuthModal } = useAuth();
   const {
     items,
     isCartOpen,
@@ -211,11 +213,15 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ onProceedToCheckout }) =
             <button
               onClick={() => {
                 closeCart();
-                onProceedToCheckout();
+                if (!canBuy) {
+                  openAuthModal('You are browsing as a visitor. Sign in with Google or Email as a buyer to order and checkout.');
+                } else {
+                  onProceedToCheckout();
+                }
               }}
-              className="w-full h-11 rounded-md bg-[#3B4A1F] hover:bg-[#232D0F] text-[#F5EEDC] font-semibold text-sm flex items-center justify-between px-5 shadow-xs transition-colors active:scale-[0.99]"
+              className="w-full h-11 rounded-md bg-[#3B4A1F] hover:bg-[#232D0F] text-[#F5EEDC] font-semibold text-sm flex items-center justify-between px-5 shadow-xs transition-colors active:scale-[0.99] cursor-pointer"
             >
-              <span>Proceed to Checkout</span>
+              <span>{!canBuy ? 'Sign In as Buyer to Checkout' : 'Proceed to Checkout'}</span>
               <div className="flex items-center gap-2">
                 <span className="text-[#B8F235]">Rs. {total.toLocaleString()}</span>
                 <ArrowRight className="w-4 h-4 text-[#B8F235]" />
