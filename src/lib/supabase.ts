@@ -2,6 +2,7 @@ import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
 // Default configured Supabase project provided for Nexus Nepal
 export const DEFAULT_SUPABASE_URL = 'https://qgmpwwbrzognonxgtqkz.supabase.co';
+export const DEFAULT_SUPABASE_ANON_KEY = 'sb_publishable_MTRMVxwZJx2xq_6WJGk1IA_n68gDLhX';
 export const SUPABASE_CALLBACK_URL = 'https://qgmpwwbrzognonxgtqkz.supabase.co/auth/v1/callback';
 
 // Retrieve active URL from environment or fallback to project URL
@@ -11,7 +12,7 @@ export const getActiveSupabaseUrl = (): string => {
     if (stored && stored.trim()) return stored.trim();
   }
   const envUrl = import.meta.env.VITE_SUPABASE_URL as string | undefined;
-  if (envUrl && envUrl.trim() && !envUrl.includes('placeholder')) {
+  if (envUrl && envUrl.trim() && !envUrl.includes('placeholder') && !envUrl.startsWith('your-')) {
     return envUrl.trim();
   }
   return DEFAULT_SUPABASE_URL;
@@ -21,18 +22,20 @@ export const getActiveSupabaseUrl = (): string => {
 export const getActiveSupabaseAnonKey = (): string => {
   if (typeof window !== 'undefined') {
     const stored = localStorage.getItem('nexus_supabase_anon_key');
-    if (stored && stored.trim()) return stored.trim();
+    if (stored && stored.trim() && !stored.startsWith('your-')) return stored.trim();
   }
   const envKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined;
-  if (envKey && envKey.trim() && !envKey.includes('placeholder')) {
+  if (envKey && envKey.trim() && !envKey.includes('placeholder') && !envKey.startsWith('your-')) {
     return envKey.trim();
   }
-  return '';
+  // Default to the provided anon/publishable key
+  return DEFAULT_SUPABASE_ANON_KEY;
 };
 
 export const isSupabaseConfigured = Boolean(
   getActiveSupabaseUrl() &&
   getActiveSupabaseAnonKey() &&
+  !getActiveSupabaseAnonKey().startsWith('your-') &&
   getActiveSupabaseAnonKey().length > 10
 );
 

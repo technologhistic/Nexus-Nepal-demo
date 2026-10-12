@@ -31,7 +31,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       const stored = localStorage.getItem('nexus_user');
       if (stored) {
         const parsed = JSON.parse(stored);
-        if (parsed?.id === 'usr_nepal_001') {
+        // Wipe legacy demo / simulated users on load so genuine Supabase Auth is strictly used
+        if (
+          !parsed?.id ||
+          parsed?.id === 'usr_nepal_001' ||
+          parsed?.id === 'usr_admin_google' ||
+          (typeof parsed?.id === 'string' && parsed?.id.startsWith('usr_goog_'))
+        ) {
           localStorage.removeItem('nexus_user');
           return null;
         }
@@ -245,7 +251,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   // Google OAuth Login
-  const loginWithGoogle = async (emailOrId?: string, displayName?: string): Promise<{ success: boolean; isAdmin?: boolean; message?: string }> => {
+  const loginWithGoogle = async (_emailOrId?: string, _displayName?: string): Promise<{ success: boolean; isAdmin?: boolean; message?: string }> => {
     // 1. If Supabase is configured, trigger genuine Google OAuth flow
     if (isSupabaseConfigured && supabase) {
       try {
@@ -260,42 +266,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
     }
 
-    // 2. If Supabase credentials are missing, provide simulated Google Buyer sign-in
-    await new Promise((r) => setTimeout(r, 400));
-    const googleEmail = emailOrId?.trim()
-      ? (emailOrId.includes('@') ? emailOrId.trim() : `${emailOrId.trim()}@gmail.com`)
-      : 'buyer.google@gmail.com';
-    const name = displayName?.trim() || (googleEmail.split('@')[0].replace(/[\._]/g, ' ') || 'Google Verified Buyer');
-
-    if (googleEmail.toLowerCase() === 'admin@gmail.com') {
-      const adminUser: User = {
-        id: 'usr_admin_google',
-        name: 'Nexus Administrator',
-        email: 'admin@gmail.com',
-        role: 'admin',
-        authProvider: 'google',
-        canBuy: true,
-        orders: user?.orders || []
-      };
-      setUser(adminUser);
-      setIsAuthModalOpen(false);
-      return { success: true, isAdmin: true };
-    }
-
-    const buyerUser: User = {
-      id: 'usr_goog_' + Date.now(),
-      name: name.charAt(0).toUpperCase() + name.slice(1),
-      email: googleEmail,
-      avatarUrl: `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(name)}&backgroundColor=232D0F&textColor=B8F235`,
-      city: 'Kathmandu',
-      role: 'buyer',
-      authProvider: 'google',
-      canBuy: true,
-      orders: user?.orders || []
+    // If Supabase is not configured, show clear error rather than fake fallback
+    return {
+      success: false,
+      message: 'Supabase Google Auth is not configured. Please check VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in your environment.'
     };
-    setUser(buyerUser);
-    setIsAuthModalOpen(false);
-    return { success: true, isAdmin: false };
   };
 
   // Sign up via Email and Password
